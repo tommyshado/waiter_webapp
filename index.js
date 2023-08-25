@@ -1,7 +1,20 @@
 import express from "express";
 import exphbs from "express-handlebars";
+import "dotenv/config";
 
 const app = express();
+
+const databaseURL = process.env.DATABASE_URL;
+
+const config = {
+    connectionString: databaseURL
+};
+
+if (process.env.NODE_ENV === "production") {
+    config.ssl = {
+        rejectUnauthorized: false
+    };
+};
 
 const handlebarSetup = exphbs.engine({
     partialsDir: "./views/partials",
