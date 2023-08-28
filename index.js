@@ -4,10 +4,8 @@ import bodyParser from "body-parser";
 import "dotenv/config";
 
 // services imports
-import login from "./services/login.js";
 
 // routes imports
-import loginRoute from "./routes/loginRoute.js";
 
 const app = express();
 
@@ -39,23 +37,26 @@ app.set("view engine", "handlebars");
 app.set("views", "./views");
 
 // services instances
-const LoginService = login();
 
 // routes imports
-const LoginRoute = loginRoute();
 
 // ROUTES:
+
 app.get("/", (req, res) => {
-    res.render("index", {
-        loginPage: LoginService.showLoginPage(),
-        waitersPage: LoginService.showWaitersPage(),
-    });
+    res.render("index");
 });
 
-app.post("/sendLoginDetails", (req, res) => {
-    LoginService.setEmailOrName(req.body.emailOrName);
-    res.redirect("/");
+app.get("/waiters/:username", (req, res) => {
+    res.render("waiters");
 });
+
+app.post("/waiters/:username", (req, res) => {
+
+});
+
+app.get("/days", (req, res) => {
+    res.render("admin");
+})
 
 const PORT = process.env.PORT || 3000;
 

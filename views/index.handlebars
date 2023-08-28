@@ -1,5 +1,4 @@
 <div class="container">
-    {{#if loginPage}}
     <div class="login-page">
         <h2>Log in the Roster App</h2>
 
@@ -20,15 +19,4 @@
         <span><a href="">Forgot your password?</a></span><br>
         <span>Don't have an account?</span> <a href="">Sign up</a>
     </div>
-    {{/if}}
-
-    {{#if waitersPage}}
-    <div class="waiters-page">
-        <form action="/waiters/:username" method="get">
-            <div class="waiters-page">
-                <h2>Hello Waiter</h2>
-            </div>
-        </form>
-    </div>
-    {{/if}}
 </div>
