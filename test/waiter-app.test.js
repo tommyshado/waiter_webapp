@@ -135,7 +135,7 @@ describe("waiters app", function() {
     });
 
     after(() => {
-        data.$pool.end;
+        database.$pool.end;
     });
 
 });
