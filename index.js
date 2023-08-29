@@ -51,14 +51,18 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
-app.get("/waiters/:username", (req, res) => {
-    res.render("waiters");
+app.get("/waiters/:username", async (req, res) => {
+    const { username } = req.params;
+    await WaitersApp.insertWaiter(username);
+    await WaitersApp.getInsertedWaiter(username);
+
+    res.render("waiters", {
+        waiterName: WaitersApp.getUsername(username)
+    });
 });
 
 app.post("/waiters/:username", (req, res) => {
-    const { username } = req.params;
     const { weekDay } = req.body;
-    WaitersApp.setValidUsername(username);
     if (weekDay) WaitersApp.selectWorkDay(weekDay);
     res.redirect("/waiters/:username");
 });

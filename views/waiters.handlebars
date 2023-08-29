@@ -1,9 +1,101 @@
 <div class="container">
-    <div class="waiters-page">
-        <form action="/waiters/username" method="get">
-            <div class="waiters-page">
-                <h2>Hello Waiter</h2>
-            </div>
-        </form>
-    </div>
+  <div class="waiters-page">
+    <form action="/waiters/{{waiterName}}" method="post">
+      <div class="waiters-page">
+
+        <h2>Welcome to the roster</h2>
+
+        <table>
+          <tr>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+          </tr>
+
+          <tr>
+            <td>
+              <label for="Monday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="monday"
+                />
+              </label>
+            </td>
+
+            <td>
+              <label for="Tuesday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="tuesday"
+                />
+              </label>
+            </td>
+
+            <td>
+              <label for="Wednesday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="wednesday"
+                />
+              </label>
+            </td>
+
+            <td>
+              <label for="Thursday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="thursday"
+                />
+              </label>
+            </td>
+
+            <td>
+              <label for="Friday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="friday"
+                />
+              </label>
+            </td>
+
+            <td>
+              <label for="Saturday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="saturday"
+                />
+              </label>
+            </td>
+
+            <td>
+              <label for="Sunday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="sunday"
+                />
+              </label>
+            </td>
+
+            <td>
+
+            </td>
+          </tr>
+        </table>
+
+        <button type="submit">Submit roster</button>
+
+      </div>
+    </form>
+  </div>
 </div>
