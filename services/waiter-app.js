@@ -12,38 +12,53 @@ const waitersApp = (db) => {
     //         return true;
     //     }return false;
     // };
-
-    const getUsername = (waiterName) => {
-        return waiterName;
-    };
-
-    const insertWaiter = async (waiterName) => {
+    
+    const insertWaiter = async waiterName => {
         const getWaiter = await db.oneOrNone(`select * from roster_webapp.workers where name = $1`, waiterName);
-        if (!getWaiter) await db.none("insert into roster_webapp.workers (name, role) values ($1, $2)", [waiterName, "waiter"]);
-    };
-
-    const getInsertedWaiter = async (waiterName) => {
-        return await db.oneOrNone(`select * from roster_webapp.workers where name = $1`, waiterName);
+        if (!getWaiter) {
+            await db.none("insert into roster_webapp.workers (name, role) values ($1, $2)", [waiterName, "waiter"]);
+        };
     };
     
-    const selectWorkDay = weekDay => {};
+    let waiterId;
 
-    const showSelectedDay = () => {};
+    const setWaiterId = async waiterName => {
+        const availableWaiter = await db.oneOrNone(`select id from roster_webapp.workers where name = $1`, waiterName);
+        waiterId = availableWaiter.id;
+    };
 
-    const viewSelectedDays = () => {};
+    const getInsertedWaiter = async waiterName => {
+        const availableWaiter = await db.oneOrNone(`select * from roster_webapp.workers where name = $1`, waiterName);
+        return availableWaiter;
+    };
+    
+    const selectWorkDay = async weekDay => {
+        if (waiterId) {
+            await db.none(`insert into roster_webapp.selected_days (waiters_id, selected_days) values ($1, $2)`, [waiterId, weekDay]);
+        };
+    };
 
-    const deleteWaiters = () => {};
+    const showSelectedDay = async () => {
+        return await db.manyOrNone(`select selected_days from roster_webapp.selected_days where waiters_id = ${waiterId}`);
+    };
+
+    // const viewSelectedDays = async () => {
+    //     const waiterSelectedDays = await showSelectedDay();
+    //     return waiterSelectedDays.map(selectedDay => Object.values(selectedDay));
+    // };
+
+    // const deleteWaiters = () => {};
 
     return {
         // validateUsername,
         // setValidUsername,
-        getUsername,
         insertWaiter,
+        setWaiterId,
         getInsertedWaiter,
         selectWorkDay,
         showSelectedDay,
-        viewSelectedDays,
-        deleteWaiters,
+        // viewSelectedDays,
+        // deleteWaiters,
     };
 };
 
