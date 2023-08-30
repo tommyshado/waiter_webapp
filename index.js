@@ -56,7 +56,7 @@ app.get("/waiters/:username", async (req, res) => {
 
     if (username !== ":username") {
         await WaitersApp.insertWaiter(username);
-        await WaitersApp.setWaiterId(username);
+        await WaitersApp.setWaiterName(username);
     };
 
     res.render("waiters", {
@@ -66,12 +66,18 @@ app.get("/waiters/:username", async (req, res) => {
 
 app.post("/waiters/:username", async (req, res) => {
     const { weekDay } = req.body;
-    if (weekDay) await WaitersApp.selectWorkDay(weekDay);
+    if (weekDay) {
+        await WaitersApp.selectWorkDay(weekDay);
+    }
     res.redirect("/waiters/:username");
 });
 
-app.get("/days", (req, res) => {
-    res.render("admin");
+app.get("/days", async (req, res) => {
+    const weekDay = await WaitersApp.waitersNameLst();
+
+    res.render("admin", {
+        dayOfTheWeek : weekDay,
+    });
 });
 
 const PORT = process.env.PORT || 3000;

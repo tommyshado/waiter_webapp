@@ -1,17 +1,4 @@
 const waitersApp = (db) => {
-    // let waiterName = "";
-
-    // const validateUsername = name => {
-    //     const lowerLettersName = name.toLowerCase().trim();
-    //     return (/^[a-zA-Z]+$/).test(lowerLettersName);
-    // };
-
-    // const setValidUsername = username => {
-    //     if (validateUsername(username)) {
-    //         waiterName = username;
-    //         return true;
-    //     }return false;
-    // };
     
     const insertWaiter = async waiterName => {
         const getWaiter = await db.oneOrNone(`select * from roster_webapp.workers where name = $1`, waiterName);
@@ -20,11 +7,11 @@ const waitersApp = (db) => {
         };
     };
     
-    let waiterId;
+    let waitersName;
 
-    const setWaiterId = async waiterName => {
-        const availableWaiter = await db.oneOrNone(`select id from roster_webapp.workers where name = $1`, waiterName);
-        waiterId = availableWaiter.id;
+    const setWaiterName = async waiterName => {
+        const availableWaiter = await db.oneOrNone(`select name from roster_webapp.workers where name = $1`, waiterName);
+        waitersName = availableWaiter.name;
     };
 
     const getInsertedWaiter = async waiterName => {
@@ -33,31 +20,34 @@ const waitersApp = (db) => {
     };
     
     const selectWorkDay = async weekDay => {
-        if (waiterId) {
-            await db.none(`insert into roster_webapp.selected_days (waiters_id, selected_days) values ($1, $2)`, [waiterId, weekDay]);
+        if (waitersName) {
+            await db.none(`insert into roster_webapp.selected_days (waiters_name, selected_day) values ($1, $2)`, [waitersName, weekDay]);
         };
     };
 
     const showSelectedDay = async () => {
-        return await db.manyOrNone(`select selected_days from roster_webapp.selected_days where waiters_id = ${waiterId}`);
+        return await db.manyOrNone(`select selected_day from roster_webapp.selected_days where waiters_name = $1`, waitersName);
     };
 
-    const viewSelectedDays = async () => {
-        const waiterSelectedDays = await db.manyOrNone("select selected_days from roster_webapp.selected_days");
-        return waiterSelectedDays.map(day => day.selected_days);
+    const waitersNameLst = async weekDay => {
+        const waiterSelectedDays = await db.manyOrNone(`select waiters_name from roster_webapp.selected_days where selected_day = '${weekDay}'`);
+        return waiterSelectedDays.map(waiter => waiter.waiters_name);
+    };
+
+    const waitersData = async () => {
+        return await db.manyOrNone("select * from roster_webapp.workers");
     };
 
     const deleteWaiters = async () => await db.any("TRUNCATE TABLE roster_webapp.workers RESTART IDENTITY CASCADE");
 
     return {
-        // validateUsername,
-        // setValidUsername,
         insertWaiter,
-        setWaiterId,
+        setWaiterName,
         getInsertedWaiter,
         selectWorkDay,
         showSelectedDay,
-        viewSelectedDays,
+        waitersNameLst,
+        waitersData,
         deleteWaiters,
     };
 };

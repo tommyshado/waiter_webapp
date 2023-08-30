@@ -50,10 +50,10 @@ describe("waiters app", function() {
         try {
             it("should be able to select a day to work on", async () => {
                 await WaitersApp.insertWaiter("kat");
-                await WaitersApp.setWaiterId("kat");
+                await WaitersApp.setWaiterName("kat");
                 await WaitersApp.selectWorkDay("monday");
     
-                assert.deepStrictEqual([{selected_days: "monday"}], await WaitersApp.showSelectedDay());
+                assert.deepStrictEqual([{selected_day: "monday"}], await WaitersApp.showSelectedDay());
             });
             
         } catch (error) {
@@ -64,10 +64,10 @@ describe("waiters app", function() {
         try {
             it("should be able to select another day to work on", async () => {
                 await WaitersApp.insertWaiter("bjorn");
-                await WaitersApp.setWaiterId("bjorn");
+                await WaitersApp.setWaiterName("bjorn");
                 await WaitersApp.selectWorkDay("thursday");
     
-                assert.deepStrictEqual([{selected_days: "thursday"}], await WaitersApp.showSelectedDay());
+                assert.deepStrictEqual([{selected_day: "thursday"}], await WaitersApp.showSelectedDay());
             });
             
         } catch (error) {
@@ -78,15 +78,15 @@ describe("waiters app", function() {
         try {
             it("should be able to select more than one day to work on", async () => {
                 await WaitersApp.insertWaiter("nicholas");
-                await WaitersApp.setWaiterId("nicholas");
+                await WaitersApp.setWaiterName("nicholas");
                 await WaitersApp.selectWorkDay("thursday");
 
 
                 await WaitersApp.insertWaiter("nicholas");
-                await WaitersApp.setWaiterId("nicholas");
+                await WaitersApp.setWaiterName("nicholas");
                 await WaitersApp.selectWorkDay("tuesday");
     
-                assert.deepStrictEqual([{selected_days: "thursday"}, {selected_days: "tuesday"}], await WaitersApp.showSelectedDay());
+                assert.deepStrictEqual([{selected_day: "thursday"}, {selected_day: "tuesday"}], await WaitersApp.showSelectedDay());
             });
             
         } catch (error) {
@@ -99,20 +99,24 @@ describe("waiters app", function() {
     describe("admin", () => {
 
         try {
-            it("should be able to view the selected days by the waiters", async () => {
+            it("should be able to view the waiters that selected for a day", async () => {
                 await WaitersApp.insertWaiter("tom");
-                await WaitersApp.setWaiterId("tom");
+                await WaitersApp.setWaiterName("tom");
                 await WaitersApp.selectWorkDay("thursday");
 
+                await WaitersApp.insertWaiter("tom");
+                await WaitersApp.setWaiterName("tom");
+                await WaitersApp.selectWorkDay("tuesday");
+
                 await WaitersApp.insertWaiter("tendani");
-                await WaitersApp.setWaiterId("tendani");
+                await WaitersApp.setWaiterName("tendani");
                 await WaitersApp.selectWorkDay("tuesday");
 
                 await WaitersApp.insertWaiter("asisipho");
-                await WaitersApp.setWaiterId("asisipho");
+                await WaitersApp.setWaiterName("asisipho");
                 await WaitersApp.selectWorkDay("thursday");
     
-                assert.deepStrictEqual(["thursday", "tuesday", "thursday"], await WaitersApp.viewSelectedDays());
+                assert.deepStrictEqual(["tom", "asisipho"], await WaitersApp.waitersNameLst("thursday"));
             });
             
         } catch (error) {
@@ -123,21 +127,21 @@ describe("waiters app", function() {
         try {
             it("should be able to delete waiters for a new week", async () => {
                 await WaitersApp.insertWaiter("tom");
-                await WaitersApp.setWaiterId("tom");
+                await WaitersApp.setWaiterName("tom");
                 await WaitersApp.selectWorkDay("thursday");
 
                 await WaitersApp.insertWaiter("tendani");
-                await WaitersApp.setWaiterId("tendani");
+                await WaitersApp.setWaiterName("tendani");
                 await WaitersApp.selectWorkDay("tuesday");
 
                 await WaitersApp.insertWaiter("asisipho");
-                await WaitersApp.setWaiterId("asisipho");
+                await WaitersApp.setWaiterName("asisipho");
                 await WaitersApp.selectWorkDay("thursday");
 
                 // setting the roster to default
-                WaitersApp.deleteWaiters();
+                await WaitersApp.deleteWaiters();
     
-                assert.deepStrictEqual([], await WaitersApp.viewSelectedDays());
+                assert.deepStrictEqual([], await WaitersApp.waitersData());
             });
             
         } catch (error) {
