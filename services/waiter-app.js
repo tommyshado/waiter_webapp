@@ -42,12 +42,12 @@ const waitersApp = (db) => {
         return await db.manyOrNone(`select selected_days from roster_webapp.selected_days where waiters_id = ${waiterId}`);
     };
 
-    // const viewSelectedDays = async () => {
-    //     const waiterSelectedDays = await showSelectedDay();
-    //     return waiterSelectedDays.map(selectedDay => Object.values(selectedDay));
-    // };
+    const viewSelectedDays = async () => {
+        const waiterSelectedDays = await db.manyOrNone("select selected_days from roster_webapp.selected_days");
+        return waiterSelectedDays.map(day => day.selected_days);
+    };
 
-    // const deleteWaiters = () => {};
+    const deleteWaiters = async () => await db.any("TRUNCATE TABLE roster_webapp.workers RESTART IDENTITY CASCADE");
 
     return {
         // validateUsername,
@@ -57,8 +57,8 @@ const waitersApp = (db) => {
         getInsertedWaiter,
         selectWorkDay,
         showSelectedDay,
-        // viewSelectedDays,
-        // deleteWaiters,
+        viewSelectedDays,
+        deleteWaiters,
     };
 };
 

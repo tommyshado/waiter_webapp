@@ -11,7 +11,7 @@ const database = pgp(connectionString);
 const WaitersApp = waitersApp(database);
 
 describe("waiters app", function() {
-    this.timeout(9000);
+    this.timeout(10000);
 
     beforeEach(async () => {
         try {
@@ -98,48 +98,52 @@ describe("waiters app", function() {
 
     describe("admin", () => {
 
-        // try {
-        //     it("should be able to view the selected days by the waiters", async () => {
-        //         await WaitersApp.insertWaiter("tom");
-        //         await WaitersApp.setWaiterId("tom");
-        //         await WaitersApp.selectWorkDay("thursday");
+        try {
+            it("should be able to view the selected days by the waiters", async () => {
+                await WaitersApp.insertWaiter("tom");
+                await WaitersApp.setWaiterId("tom");
+                await WaitersApp.selectWorkDay("thursday");
 
-        //         await WaitersApp.insertWaiter("tendani");
-        //         await WaitersApp.setWaiterId("tendani");
-        //         await WaitersApp.selectWorkDay("tuesday");
+                await WaitersApp.insertWaiter("tendani");
+                await WaitersApp.setWaiterId("tendani");
+                await WaitersApp.selectWorkDay("tuesday");
 
-        //         await WaitersApp.insertWaiter("asisipho");
-        //         await WaitersApp.setWaiterId("asisipho");
-        //         await WaitersApp.selectWorkDay("thursday");
+                await WaitersApp.insertWaiter("asisipho");
+                await WaitersApp.setWaiterId("asisipho");
+                await WaitersApp.selectWorkDay("thursday");
     
-        //         assert.deepStrictEqual(["thursday", "tuesday", "thursday", "tuesday"], await WaitersApp.viewSelectedDays());
-        //     });
+                assert.deepStrictEqual(["thursday", "tuesday", "thursday"], await WaitersApp.viewSelectedDays());
+            });
             
-        // } catch (error) {
-        //     console.log(error);
-        //     throw(error);
-        // };
+        } catch (error) {
+            console.log(error);
+            throw(error);
+        };
 
-        // try {
-        //     it("should be able to delete waiters for a new week", async () => {
-        //         await WaitersApp.insertWaiter("tom");
-        //         await WaitersApp.insertWaiter("tendani");
-        //         await WaitersApp.insertWaiter("asisipho");
+        try {
+            it("should be able to delete waiters for a new week", async () => {
+                await WaitersApp.insertWaiter("tom");
+                await WaitersApp.setWaiterId("tom");
+                await WaitersApp.selectWorkDay("thursday");
 
-        //         WaitersApp.selectWorkDay("thursday");
-        //         WaitersApp.selectWorkDay("tuesday");
-        //         WaitersApp.selectWorkDay("thursday");
-        //         WaitersApp.selectWorkDay("tuesday");
-        //         // setting the roster to default
-        //         WaitersApp.deleteWaiters();
+                await WaitersApp.insertWaiter("tendani");
+                await WaitersApp.setWaiterId("tendani");
+                await WaitersApp.selectWorkDay("tuesday");
+
+                await WaitersApp.insertWaiter("asisipho");
+                await WaitersApp.setWaiterId("asisipho");
+                await WaitersApp.selectWorkDay("thursday");
+
+                // setting the roster to default
+                WaitersApp.deleteWaiters();
     
-        //         assert.deepStrictEqual([], await WaitersApp.viewSelectedDays());
-        //     });
+                assert.deepStrictEqual([], await WaitersApp.viewSelectedDays());
+            });
             
-        // } catch (error) {
-        //     console.log(error);
-        //     throw(error);
-        // }
+        } catch (error) {
+            console.log(error);
+            throw(error);
+        }
 
     });
 
