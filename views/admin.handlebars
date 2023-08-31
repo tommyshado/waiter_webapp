@@ -1,29 +1,37 @@
 <div class="container">
-    <form action="/days" method="get">
-        <div class="admin-page">
-            <h2>Welcome to the Roster App</h2>
+  <form action="/days" method="get">
+    <div class="admin-page">
+      <h2>Welcome to the Roster App</h2>
 
-            <table>
-                <tr>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                    <th>Sunday</th>
-                </tr>
+      <table>
+        <tr>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+          <th>Sunday</th>
+        </tr>
 
-                <tr>
-                    <td><li></li></td>
-                    <td><li></li></td>
-                    <td><li></li></td>
-                    <td><li></li></td>
-                    <td><li></li></td>
-                    <td><li></li></td>
-                    <td><li></li></td>
-                </tr>
-            </table>
-        </div>
-    </form>
+        <tbody>
+          {{#each waiterNames}}
+            <tr>
+              {{#each this}}
+                <td>
+                  <ul>
+                    <li>{{this}}</li>
+                  </ul>
+                </td>
+              {{/each}}
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </form>
+
+  <form action="/reset" method="post">
+      <button type="submit">Reset roster</button>
+  </form>
 </div>

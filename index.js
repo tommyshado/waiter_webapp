@@ -66,18 +66,35 @@ app.get("/waiters/:username", async (req, res) => {
 
 app.post("/waiters/:username", async (req, res) => {
     const { weekDay } = req.body;
-    if (weekDay) {
-        await WaitersApp.selectWorkDay(weekDay);
-    }
+    if (weekDay) await WaitersApp.selectWorkDay(weekDay);
+
     res.redirect("/waiters/:username");
 });
 
 app.get("/days", async (req, res) => {
-    const weekDay = await WaitersApp.waitersNameLst();
+    const namesOfWaiters = [[], [], [], [], [], [], []];
+    const selectedDaysByWaiters = await WaitersApp.waitersNameLst();
 
-    res.render("admin", {
-        dayOfTheWeek : weekDay,
+    selectedDaysByWaiters.forEach(waiterDetails => {
+        if (waiterDetails.selected_day === "monday") namesOfWaiters[0].push(waiterDetails.waiters_name);
+        else if (waiterDetails.selected_day === "tuesday") namesOfWaiters[1].push(waiterDetails.waiters_name);
+        else if (waiterDetails.selected_day === "wednesday") namesOfWaiters[2].push(waiterDetails.waiters_name);
+        else if (waiterDetails.selected_day === "thursday") namesOfWaiters[3].push(waiterDetails.waiters_name);
+        else if (waiterDetails.selected_day === "friday") namesOfWaiters[4].push(waiterDetails.waiters_name);
+        else if (waiterDetails.selected_day === "saturday") namesOfWaiters[5].push(waiterDetails.waiters_name);
+        else namesOfWaiters[6].push(waiterDetails.waiters_name);
     });
+    
+    console.log(namesOfWaiters);
+    
+    res.render("admin", {
+        waiterNames: namesOfWaiters,
+    });
+});
+
+app.post("/reset", async (req, res) => {
+    await WaitersApp.deleteWaiters();
+    res.redirect("/days");
 });
 
 const PORT = process.env.PORT || 3000;
