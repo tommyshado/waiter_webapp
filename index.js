@@ -66,9 +66,10 @@ app.get("/waiters/:username", async (req, res) => {
 
 app.post("/waiters/:username", async (req, res) => {
     const { weekDay } = req.body;
+    const {username} = req.params;
     if (weekDay) await WaitersApp.selectWorkDay(weekDay);
 
-    res.redirect("/waiters/:username");
+    res.redirect("/waiters/"+username);
 });
 
 app.get("/days", async (req, res) => {
