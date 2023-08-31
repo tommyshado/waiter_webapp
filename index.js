@@ -76,14 +76,20 @@ app.get("/days", async (req, res) => {
     const namesOfWaiters = [[], [], [], [], [], [], []];
     const selectedDaysByWaiters = await WaitersApp.waitersNameLst();
 
+    const dayIndexMapping = {
+        "monday": 0,
+        "tuesday": 1,
+        "wednesday": 2,
+        "thursday": 3,
+        "friday": 4,
+        "saturday": 5,
+        "sunday": 6
+    };
+
     selectedDaysByWaiters.forEach(waiterDetails => {
-        if (waiterDetails.selected_day === "monday") namesOfWaiters[0].push(waiterDetails.waiters_name);
-        else if (waiterDetails.selected_day === "tuesday") namesOfWaiters[1].push(waiterDetails.waiters_name);
-        else if (waiterDetails.selected_day === "wednesday") namesOfWaiters[2].push(waiterDetails.waiters_name);
-        else if (waiterDetails.selected_day === "thursday") namesOfWaiters[3].push(waiterDetails.waiters_name);
-        else if (waiterDetails.selected_day === "friday") namesOfWaiters[4].push(waiterDetails.waiters_name);
-        else if (waiterDetails.selected_day === "saturday") namesOfWaiters[5].push(waiterDetails.waiters_name);
-        else namesOfWaiters[6].push(waiterDetails.waiters_name);
+        const selectedDay = waiterDetails.selected_day;
+        const storeDayIndex = dayIndexMapping[selectedDay];
+        namesOfWaiters[storeDayIndex].push(waiterDetails.waiters_name);
     });
     
     console.log(namesOfWaiters);
