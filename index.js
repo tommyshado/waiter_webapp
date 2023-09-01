@@ -3,11 +3,13 @@ import exphbs from "express-handlebars";
 import bodyParser from "body-parser";
 import "dotenv/config";
 import pgPromise from "pg-promise";
-import waitersApp from "./services/waiter-app.js";
 
 // services imports
+import waitersApp from "./services/waiter-app.js";
 
 // routes imports
+import adminWaitersRoutes from "./routes/admin-waiters-routes.js";
+import loginRoute from "./routes/login.js";
 
 const app = express();
 const pgp = pgPromise();
@@ -43,64 +45,21 @@ const db = pgp(config);
 // services instances
 const WaitersApp = waitersApp(db);
 
-// routes imports
+// routes instances
+const adminWaiterRoutesIns = adminWaitersRoutes(WaitersApp);
+const login = loginRoute();
 
 // ROUTES:
 
-app.get("/", (req, res) => {
-    res.render("index");
-});
+app.get("/", login.homeRoute);
 
-app.get("/waiters/:username", async (req, res) => {
-    const { username } = req.params;
+app.get("/waiters/:username", adminWaiterRoutesIns.waitersRoute);
 
-    if (username !== ":username") {
-        await WaitersApp.insertWaiter(username);
-        await WaitersApp.setWaiterName(username);
-    };
+app.post("/waiters/:username", adminWaiterRoutesIns.selectWorkDayRoute);
 
-    res.render("waiters", {
-        waiterName: username,
-    });
-});
+app.get("/days", adminWaiterRoutesIns.daysRoute);
 
-app.post("/waiters/:username", async (req, res) => {
-    const { weekDay } = req.body;
-    const {username} = req.params;
-    if (weekDay) await WaitersApp.selectWorkDay(weekDay);
-
-    res.redirect("/waiters/"+username);
-});
-
-app.get("/days", async (req, res) => {
-    const namesOfWaiters = [[], [], [], [], [], [], []];
-    const selectedDaysByWaiters = await WaitersApp.waitersNameLst();
-
-    const dayIndexMapping = {
-        "monday": 0,
-        "tuesday": 1,
-        "wednesday": 2,
-        "thursday": 3,
-        "friday": 4,
-        "saturday": 5,
-        "sunday": 6
-    };
-
-    selectedDaysByWaiters.forEach(waiterDetails => {
-        const selectedDay = waiterDetails.selected_day;
-        const storeDayIndex = dayIndexMapping[selectedDay];
-        namesOfWaiters[storeDayIndex].push(waiterDetails.waiters_name);
-    });
-    
-    res.render("admin", {
-        waiterNames: namesOfWaiters,
-    });
-});
-
-app.post("/reset", async (req, res) => {
-    await WaitersApp.deleteWaiters();
-    res.redirect("/days");
-});
+app.post("/reset", adminWaiterRoutesIns.resetRoute);
 
 const PORT = process.env.PORT || 3000;
 
