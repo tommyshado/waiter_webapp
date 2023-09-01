@@ -92,8 +92,6 @@ app.get("/days", async (req, res) => {
         namesOfWaiters[storeDayIndex].push(waiterDetails.waiters_name);
     });
     
-    console.log(namesOfWaiters);
-    
     res.render("admin", {
         waiterNames: namesOfWaiters,
     });

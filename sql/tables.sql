@@ -5,7 +5,7 @@ CREATE TABLE workers (
 );
 
 CREATE TABLE selected_days (
-    waiters_name int,
+    waiters_name text not null,
     foreign key (waiters_name) references workers(name) ON DELETE CASCADE,
     selected_day text not null
 );
