@@ -17,9 +17,16 @@ const waitersApp = db => {
     const getInsertedWaiter = async waiterName => await db.oneOrNone(`select * from roster_webapp.workers where name = $1`, waiterName);
     
     const selectWorkDay = async weekDay => {
+        const checksArray = Array.isArray(weekDay);
         // create a queries to not allow a waiter to select the same day twice for one week
-        if (waitersName) {
-            await db.none(`insert into roster_webapp.selected_days (waiters_name, selected_day) values ($1, $2)`, [waitersName, weekDay]);
+        if (!checksArray) {
+            if (waitersName) {
+                await db.none(`insert into roster_webapp.selected_days (waiters_name, selected_day) values ($1, $2)`, [waitersName, weekDay]);
+            };
+        } else {
+            weekDay.forEach(async day => {
+                await db.none(`insert into roster_webapp.selected_days (waiters_name, selected_day) values ($1, $2)`, [waitersName, day])
+            });
         };
     };
 
