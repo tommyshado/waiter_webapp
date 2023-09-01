@@ -2,14 +2,21 @@ const adminWaitersRoutes = waitersAppLogic => {
 
     const waitersRoute = async (req, res) => {
         const { username } = req.params;
+        const lowerLetterName = username.toLowerCase();
+        
+        const validateWaiterName = name => {
+            const regexPattern = /^[a-zA-Z]+$/;
+            const regexPatternTest = regexPattern.test(name);
+            return regexPatternTest ? regexPatternTest : false // req.flash("error", "Invalid waiter name. Please enter abcdeABCDE.");
+        };
     
-        if (username !== ":username") {
-            await waitersAppLogic.insertWaiter(username);
-            await waitersAppLogic.setWaiterName(username);
+        if (username !== ":username" && validateWaiterName(username)) {
+            await waitersAppLogic.insertWaiter(lowerLetterName);
+            await waitersAppLogic.setWaiterName(lowerLetterName);
         };
     
         res.render("waiters", {
-            waiterName: username,
+            waiterName: lowerLetterName,
         });
     };
 
