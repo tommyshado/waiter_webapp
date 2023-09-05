@@ -14,13 +14,16 @@
       </tr>
 
       <tbody>
-          <tr>
+        {{#if classNames}}
+          <tr class="{{classNames}}">
+        {{/if}}
+
         {{#each waiterNames}}
               <td>
                 <ul>
-              {{#each waiters}}
+                {{#each waiters}}
                   <li>{{this}}</li>
-              {{/each}}
+                {{/each}}
                 </ul>
               </td>
         {{/each}}

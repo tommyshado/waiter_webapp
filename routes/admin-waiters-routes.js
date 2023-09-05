@@ -82,8 +82,19 @@ const adminWaitersRoutes = waitersAppLogic => {
             });
         });
 
+        const classNames = () => {
+            for (let i = 0; i < availableWaiters.length; i++) {
+                const waiter = availableWaiters[i].waiters.length;
+
+                if (waiter > 3) return "warning";
+                else if (waiter === 3) return "success";
+                else return "danger";
+            };
+        };
+
         res.render("admin", {
             waiterNames: availableWaiters,
+            classNames: classNames(),
         });
     };
 

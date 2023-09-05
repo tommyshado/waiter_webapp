@@ -6,6 +6,7 @@
     --action-color: #1ed760;
 
     --border-radius: 10px;
+    --padding: 10px;
     --margin: 48px 0px;
 }
 
@@ -38,6 +39,32 @@ nav {
 
 .admin-page {
     margin: var(--margin);
+}
+
+li {
+    list-style: none;
+}
+
+table {
+    width: 50%;
+}
+
+table, th, td {
+    border-bottom: 1px solid var(--text-color);
+    border-collapse: collapse;
+    padding: var(--padding);
+}
+
+.success {
+    color: var(--action-color);
+}
+
+.warning {
+    color: orange;
+}
+
+.danger {
+    color: red;
 }
 
 .checkBox {
