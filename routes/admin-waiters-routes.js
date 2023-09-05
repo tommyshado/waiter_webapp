@@ -27,7 +27,7 @@ const adminWaitersRoutes = waitersAppLogic => {
     };
 
     const daysRoute = async (req, res) => {
-        const selectedDaysByWaiters = await waitersAppLogic.availableWaiters();
+        const dailyWaiters = await waitersAppLogic.availableWaiters();
         const availableWaiters = [
             {
                 day: "monday",
@@ -59,10 +59,10 @@ const adminWaitersRoutes = waitersAppLogic => {
             },
         ];
 
-        selectedDaysByWaiters.forEach(waiterDetails => {
-            const selectedDay = waiterDetails.selected_day;
+        dailyWaiters.forEach(waiter_ => {
+            const selectedDay = waiter_.day;
             availableWaiters.forEach(waiter => {
-                waiter.day === selectedDay ? waiter.waiters.push(waiterDetails.waiters_name) : null;
+                waiter.day === selectedDay ? waiter.waiters.push(waiter_.waiter_name) : null;
             });
         });
 

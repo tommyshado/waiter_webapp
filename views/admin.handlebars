@@ -15,17 +15,17 @@
         </tr>
 
         <tbody>
-          {{#each waiterNames}}
            <tr>
-              {{#each waiters}}
+          {{#each waiterNames}}
                 <td>
                   <ul>
+                {{#each waiters}}
                     <li>{{this}}</li>
+                {{/each}}
                   </ul>
                 </td>
-              {{/each}}
-            </tr>
           {{/each}}
+            </tr>
         </tbody>
       </table>
     </div>
