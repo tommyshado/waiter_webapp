@@ -18,12 +18,19 @@ const waitersApp = db => {
     
     const selectShift = async shift => {
         const checksShift = Array.isArray(shift);
-        // create a queries to not allow a waiter to select the same day twice for one week
+
         if (!checksShift) {
-            await db.none(`insert into availability (waiter_id, waiter_shift) values ($1, $2)`, [waitersId, shift]);
+            const checkWaiter = await db.oneOrNone(`select * from availability where waiter_id = ${waitersId} and waiter_shift = '${shift}'`);
+            if (!checkWaiter) {
+                await db.none(`insert into availability (waiter_id, waiter_shift) values ($1, $2)`, [waitersId, shift]);
+            };
+
         } else {
             shift.forEach(async oneShift => {
-                await db.none(`insert into availability (waiter_id, waiter_shift) values ($1, $2)`, [waitersId, oneShift]);
+                const checkWaiter = await db.oneOrNone(`select * from availability where waiter_id = ${waitersId} and waiter_shift = '${oneShift}'`);
+                if (!checkWaiter) {
+                    await db.none(`insert into availability (waiter_id, waiter_shift) values ($1, $2)`, [waitersId, oneShift]);
+                };
             });
         };
     };
