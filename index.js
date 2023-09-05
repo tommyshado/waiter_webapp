@@ -26,6 +26,8 @@ if (process.env.NODE_ENV === "production") {
     };
 };
 
+app.use(express.static("public"));
+
 const handlebarSetup = exphbs.engine({
     partialsDir: "./views/partials",
     viewPath: "./views",
