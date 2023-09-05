@@ -102,6 +102,26 @@ describe("waiters app", function () {
       console.log(error);waitersData
       throw error;
     };
+
+    try {
+      it("should not be able to select the same day twice", async () => {
+        await WaitersApp.insertWaiter("nicholas");
+        await WaitersApp.setWaiterId("nicholas");
+        await WaitersApp.selectShift("thursday");
+
+        await WaitersApp.insertWaiter("nicholas");
+        await WaitersApp.setWaiterId("nicholas");
+        await WaitersApp.selectShift("thursday");
+
+        assert.deepStrictEqual(
+          [{ day: "thursday", waiter_name: "nicholas" }],
+          await WaitersApp.availableWaiters()
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    };
   });
 
   describe("admin", () => {
