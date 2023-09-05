@@ -1,0 +1,70 @@
+:root {
+    /* color scheme from coolors.co */
+    --body-color: #242424;
+    --text-color: #FFFFFF;
+    --important-areas-color: #000000;
+    --action-color: #1ed760;
+
+    --border-radius: 10px;
+    --margin: 48px 0px;
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--body-color);
+}
+
+.container {
+    display: grid;
+    height: 100vh;
+}
+
+.other {
+    font-weight: 700;
+    padding: 20px 0px 20px 35px;
+    margin-bottom: 0px;
+    border-bottom: none;
+}
+
+nav {
+    background-color: var(--important-areas-color);
+    border-radius: var(--border-radius);
+    font-size: 1.5em;
+}
+
+.waiters-page {
+    margin: var(--margin);
+}
+
+.admin-page {
+    margin: var(--margin);
+}
+
+.checkBox {
+    accent-color: var(--action-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.checkBox:hover {
+    transform: scale(1.1);
+}
+
+button {
+    background-color: var(--action-color);
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    border-radius: 500px;
+    font-size: inherit;
+    min-block-size: 48px;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    padding-block: 8px;
+    padding-inline: 32px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
