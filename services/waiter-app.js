@@ -14,7 +14,7 @@ const waitersApp = db => {
         waitersId = availableWaiter.waiter_id;
     };
 
-    // const getInsertedWaiter = async waiterName => await db.oneOrNone(`select * from roster_webapp.workers where name = $1`, waiterName);
+    const retrieveWaiter = async () => await db.oneOrNone(`select waiter_name from waiters`);
     
     const selectShift = async shift => {
         const checksShift = Array.isArray(shift);
@@ -28,22 +28,19 @@ const waitersApp = db => {
         };
     };
 
-    // const showSelectedDay = async () => await db.manyOrNone(`select selected_day from roster_webapp.selected_days where waiters_name = $1`, waitersId);
-
     const availableWaiters = async () => await db.manyOrNone("SELECT waiters.waiter_name, shifts.day FROM waiters INNER JOIN availability ON waiters.waiter_id = availability.waiter_id INNER JOIN shifts ON availability.waiter_shift = shifts.day");
 
-    // const waitersData = async () => await db.manyOrNone("select * from roster_webapp.workers");
+    const waitersData = async () => await db.manyOrNone("select * from waiters");
 
     const deleteWaiters = async () => await db.any("TRUNCATE TABLE waiters RESTART IDENTITY CASCADE");
 
     return {
         insertWaiter,
+        retrieveWaiter,
         setWaiterId,
         selectShift,
-        // getInsertedWaiter,
-        // showSelectedDay,
         availableWaiters,
-        // waitersData,
+        waitersData,
         deleteWaiters,
     };
 };
