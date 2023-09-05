@@ -11,7 +11,7 @@ const adminWaitersRoutes = waitersAppLogic => {
 
         if (username !== ":username" && validateWaiterName(username)) {
             await waitersAppLogic.insertWaiter(lowerLetterName);
-            await waitersAppLogic.setWaiterName(lowerLetterName);
+            await waitersAppLogic.setWaiterId(lowerLetterName);
         }
 
         res.render("waiters", {
@@ -22,12 +22,12 @@ const adminWaitersRoutes = waitersAppLogic => {
     const selectWorkDayRoute = async (req, res) => {
         const { weekDay } = req.body;
         const { username } = req.params;
-        if (weekDay) await waitersAppLogic.selectWorkDay(weekDay);
+        if (weekDay) await waitersAppLogic.selectShift(weekDay);
         res.redirect(`/waiters/${username}`);
     };
 
     const daysRoute = async (req, res) => {
-        const selectedDaysByWaiters = await waitersAppLogic.waitersNameLst();
+        const selectedDaysByWaiters = await waitersAppLogic.availableWaiters();
         const availableWaiters = [
             {
                 day: "monday",

@@ -1,11 +1,17 @@
-CREATE TABLE workers (
-    id serial not null primary key,
-    name text unique not null,
-    role text not null
-);
 
-CREATE TABLE selected_days (
-    waiters_name text not null,
-    foreign key (waiters_name) references workers(name) ON DELETE CASCADE,
-    selected_day text not null
+CREATE TABLE waiters (
+    waiter_id serial not null primary key,
+    waiter_name text unique not null
+);
+create table shifts (
+    shift_id serial not null primary key,
+    day text unique not null,
+    waiters_required int,
+    waiters_assigned int
+);
+CREATE TABLE availability (
+    waiter_id int,
+    foreign key (waiter_id) references waiters(waiter_id) on delete cascade,
+    waiter_shift text not null,
+    foreign key (waiter_shift) references shifts(day) on delete cascade
 );
