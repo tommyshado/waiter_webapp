@@ -3,6 +3,18 @@
   <div class="waiters-page">
     <h2>Welcome to the Roster App</h2>
 
+    {{#if errorMessage}}
+    <div class="messages danger">
+      {{errorMessage}}
+    </div>
+    {{/if}}
+
+    {{#if successMessage}}
+    <div class="messages success">
+      {{successMessage}}
+    </div>
+    {{/if}}
+
     <table>
       <tr>
         <th>Monday</th>
@@ -103,6 +115,18 @@
       </tbody>
     </table>
 
-    <button type="submit">Submit roster</button>
+    <div id="submit">
+        <button type="submit">Submit roster</button>
+    </div>
   </div>
 </form>
+
+
+<script>
+  setTimeout(function() {
+        const messages = document.querySelector(".messages");
+        if (messages) {
+            messages.style.display = "none";
+        };
+    }, 3000);
+</script>

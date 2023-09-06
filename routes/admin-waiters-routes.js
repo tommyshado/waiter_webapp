@@ -7,7 +7,7 @@ const adminWaitersRoutes = waitersAppLogic => {
         const validateWaiterName = name => {
             const regexPattern = /^[a-zA-Z]+$/;
             const regexPatternTest = regexPattern.test(name);
-            return regexPatternTest ? regexPatternTest : false; // req.flash("error", "Invalid waiter name. Please enter abcdeABCDE.");
+            return regexPatternTest ? regexPatternTest : req.flash("error", "Invalid waiter name. Please enter name. abcdeABCDE.");
         };
 
         if (username !== ":username" && validateWaiterName(username)) {
@@ -31,6 +31,8 @@ const adminWaitersRoutes = waitersAppLogic => {
 
         res.render("waiters", {
             waiterName: lowerLetterName,
+            errorMessage: req.flash("error")[0],
+            successMessage: req.flash("success")[0],
             checkbox: await checkedCheckbox(),
         });
     };
@@ -38,7 +40,10 @@ const adminWaitersRoutes = waitersAppLogic => {
     const selectWorkDayRoute = async (req, res) => {
         const { weekDay } = req.body;
         const { username } = req.params;
-        if (weekDay) await waitersAppLogic.selectShift(weekDay);
+        if (weekDay) {
+            await waitersAppLogic.selectShift(weekDay);
+            req.flash("success", "successfully selected available days.");
+        };
         res.redirect(`/waiters/${username}`);
     };
 
@@ -94,12 +99,14 @@ const adminWaitersRoutes = waitersAppLogic => {
 
         res.render("admin", {
             waiterNames: availableWaiters,
+            successMessage: req.flash("success")[0],
             classNames: classNames(),
         });
     };
 
     const resetRoute = async (req, res) => {
         await waitersAppLogic.deleteWaiters();
+        req.flash("success", "successfully reseted the roster.");
         res.redirect("/days");
     };
 

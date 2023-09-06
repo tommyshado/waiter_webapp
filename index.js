@@ -3,6 +3,8 @@ import exphbs from "express-handlebars";
 import bodyParser from "body-parser";
 import "dotenv/config";
 import pgPromise from "pg-promise";
+import flash from "express-flash";
+import session from "express-session";
 
 // services imports
 import waitersApp from "./services/waiter-app.js";
@@ -13,6 +15,16 @@ import loginRoute from "./routes/login.js";
 
 const app = express();
 const pgp = pgPromise();
+
+// initialise session middleware - flash-express depends on it
+app.use(session({
+    secret : "codeXer",
+    resave: false,
+    saveUninitialized: true
+}));
+
+// initialise the flash middleware
+app.use(flash());
 
 const databaseURL = process.env.DATABASE_URL;
 

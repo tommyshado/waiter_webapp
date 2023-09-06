@@ -7,6 +7,7 @@
 
     --border-radius: 10px;
     --padding: 10px;
+    --other-padding: 3em;
     --margin: 48px 0px;
 }
 
@@ -17,7 +18,6 @@ body {
 
 .container {
     display: grid;
-    height: 100vh;
 }
 
 .other {
@@ -90,6 +90,10 @@ button {
     padding-inline: 32px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+}
+
+#submit {
+    padding-top: var(--other-padding);
 }
 
 button:hover {
