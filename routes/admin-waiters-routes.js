@@ -80,23 +80,20 @@ const adminWaitersRoutes = waitersAppLogic => {
             const selectedDay = waiter_.day;
             availableWaiters.forEach(waiter => {
                 waiter.day === selectedDay ? waiter.waiters.push(waiter_.waiter_name) : null;
+
+                if (waiter.waiters.length > 3) {
+                    waiter.className = "warning";
+                } else if (waiter.waiters.length === 3) {
+                    waiter.className = "success";
+                } else {
+                    waiter.className = "danger";
+                };
             });
         });
-
-        const classNames = () => {
-            for (let i = 0; i < availableWaiters.length; i++) {
-                const waiter = availableWaiters[i].waiters.length;
-
-                if (waiter > 3) return "warning";
-                else if (waiter === 3) return "success";
-                else return "danger";
-            };
-        };
 
         res.render("admin", {
             waiterNames: availableWaiters,
             successMessage: req.flash("success")[0],
-            classNames: classNames(),
         });
     };
 

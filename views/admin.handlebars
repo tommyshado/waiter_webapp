@@ -20,12 +20,11 @@
       </tr>
 
       <tbody>
-        {{#if classNames}}
-          <tr class="{{classNames}}">
-        {{/if}}
 
         {{#each waiterNames}}
-              <td>
+              {{#if className}}
+              <td class="{{className}}">
+              {{/if}}
                 <ul>
                 {{#each waiters}}
                   <li>{{this}}</li>
