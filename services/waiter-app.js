@@ -59,6 +59,8 @@ const waitersApp = db => {
             `UPDATE shifts SET day = '${shift}' FROM waiters INNER JOIN availability ON waiters.waiter_id = availability.waiter_id WHERE waiters.waiter_name = :waiter_name AND shifts.day = day`
         ); // shifts.day insert the day I want to update
 
+    const shifts = () => db.manyOrNone(`select waiter_shift from availability where waiter_id = '${waitersId}'`);
+
     const deleteWaiters = async () => await db.any("TRUNCATE TABLE waiters RESTART IDENTITY CASCADE");
 
     return {
@@ -67,6 +69,7 @@ const waitersApp = db => {
         selectShift,
         availableWaiters,
         updateSelectedDay,
+        shifts,
         deleteWaiters,
     };
 };

@@ -22,7 +22,8 @@
 
         <tbody>
 
-          {{#each waiterNames}}
+          <tr>
+            {{#each waiterNames}}
                 {{#if className}}
                 <td class="{{className}}">
                 {{/if}}
@@ -32,7 +33,7 @@
                   {{/each}}
                   </ul>
                 </td>
-          {{/each}}
+            {{/each}}
             </tr>
         </tbody>
       </table>
