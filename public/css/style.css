@@ -10,6 +10,7 @@
     --other-padding: 3em;
     --margin: 48px 0px;
     --text-uppercase: uppercase;
+    --overflow: auto;
 }
 
 body {
@@ -45,6 +46,10 @@ nav {
 
 li {
     list-style: none;
+}
+
+.table-container {
+    overflow-x: var(--overflow);
 }
 
 table {
@@ -102,4 +107,11 @@ button {
 
 button:hover {
     transform: scale(1.1);
+}
+
+@media (max-width: 600px) {
+    th, td {
+        padding: 4px;
+        font-size: 12px;
+    }
 }

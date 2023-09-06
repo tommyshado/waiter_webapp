@@ -15,119 +15,121 @@
     </div>
     {{/if}}
 
-    <table>
-      <tr>
-        <th>Monday</th>
-        <th>Tuesday</th>
-        <th>Wednesday</th>
-        <th>Thursday</th>
-        <th>Friday</th>
-        <th>Saturday</th>
-        <th>Sunday</th>
-      </tr>
-
-      <tbody>
+    <div class="table-container">
+      <table>
         <tr>
-          <td>
-            <label for="Monday">
-              <input
-                type="checkbox"
-                name="weekDay"
-                value="monday"
-                class="checkBox"
-                {{#if isChecked}}
-                checked
-                {{/if}}
-              />
-            </label>
-          </td>
-
-          <td>
-            <label for="Tuesday">
-              <input
-                type="checkbox"
-                name="weekDay"
-                value="tuesday"
-                class="checkBox"
-                {{#if isChecked}}
-                checked
-                {{/if}}
-              />
-            </label>
-          </td>
-
-          <td>
-            <label for="Wednesday">
-              <input
-                type="checkbox"
-                name="weekDay"
-                value="wednesday"
-                class="checkBox"
-                {{#if isChecked}}
-                checked
-                {{/if}}
-              />
-            </label>
-          </td>
-
-          <td>
-            <label for="Thursday">
-              <input
-                type="checkbox"
-                name="weekDay"
-                value="thursday"
-                class="checkBox"
-                {{#if isChecked}}
-                checked
-                {{/if}}
-              />
-            </label>
-          </td>
-
-          <td>
-            <label for="Friday">
-              <input
-                type="checkbox"
-                name="weekDay"
-                value="friday"
-                class="checkBox"
-                {{#if isChecked}}
-                checked
-                {{/if}}
-              />
-            </label>
-          </td>
-
-          <td>
-            <label for="Saturday">
-              <input
-                type="checkbox"
-                name="weekDay"
-                value="saturday"
-                class="checkBox"
-                {{#if isChecked}}
-                checked
-                {{/if}}
-              />
-            </label>
-          </td>
-
-          <td>
-            <label for="Sunday">
-              <input
-                type="checkbox"
-                name="weekDay"
-                value="sunday"
-                class="checkBox"
-                {{#if isChecked}}
-                checked
-                {{/if}}
-              />
-            </label>
-          </td>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+          <th>Sunday</th>
         </tr>
-      </tbody>
-    </table>
+
+        <tbody>
+          <tr>
+            <td>
+              <label for="Monday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="monday"
+                  class="checkBox"
+                  {{#if isChecked}}
+                  checked
+                  {{/if}}
+                />
+              </label>
+            </td>
+
+            <td>
+              <label for="Tuesday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="tuesday"
+                  class="checkBox"
+                  {{#if isChecked}}
+                  checked
+                  {{/if}}
+                />
+              </label>
+            </td>
+
+            <td>
+              <label for="Wednesday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="wednesday"
+                  class="checkBox"
+                  {{#if isChecked}}
+                  checked
+                  {{/if}}
+                />
+              </label>
+            </td>
+
+            <td>
+              <label for="Thursday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="thursday"
+                  class="checkBox"
+                  {{#if isChecked}}
+                  checked
+                  {{/if}}
+                />
+              </label>
+            </td>
+
+            <td>
+              <label for="Friday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="friday"
+                  class="checkBox"
+                  {{#if isChecked}}
+                  checked
+                  {{/if}}
+                />
+              </label>
+            </td>
+
+            <td>
+              <label for="Saturday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="saturday"
+                  class="checkBox"
+                  {{#if isChecked}}
+                  checked
+                  {{/if}}
+                />
+              </label>
+            </td>
+
+            <td>
+              <label for="Sunday">
+                <input
+                  type="checkbox"
+                  name="weekDay"
+                  value="sunday"
+                  class="checkBox"
+                  {{#if isChecked}}
+                  checked
+                  {{/if}}
+                />
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div id="submit">
         <button type="submit">Submit roster</button>

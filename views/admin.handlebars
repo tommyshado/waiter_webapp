@@ -8,33 +8,35 @@
     </div>
     {{/if}}
 
-    <table>
-      <tr>
-        <th>Monday</th>
-        <th>Tuesday</th>
-        <th>Wednesday</th>
-        <th>Thursday</th>
-        <th>Friday</th>
-        <th>Saturday</th>
-        <th>Sunday</th>
-      </tr>
+    <div class="table-container">
+      <table>
+        <tr>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+          <th>Sunday</th>
+        </tr>
 
-      <tbody>
+        <tbody>
 
-        {{#each waiterNames}}
-              {{#if className}}
-              <td class="{{className}}">
-              {{/if}}
-                <ul>
-                {{#each waiters}}
-                  <li>{{this}}</li>
-                {{/each}}
-                </ul>
-              </td>
-        {{/each}}
-          </tr>
-      </tbody>
-    </table>
+          {{#each waiterNames}}
+                {{#if className}}
+                <td class="{{className}}">
+                {{/if}}
+                  <ul>
+                  {{#each waiters}}
+                    <li>{{this}}</li>
+                  {{/each}}
+                  </ul>
+                </td>
+          {{/each}}
+            </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </form>
 
