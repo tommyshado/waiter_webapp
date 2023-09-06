@@ -9,6 +9,7 @@
     --padding: 10px;
     --other-padding: 3em;
     --margin: 48px 0px;
+    --text-uppercase: uppercase;
 }
 
 body {
@@ -18,6 +19,7 @@ body {
 
 .container {
     display: grid;
+    text-transform: var(--text-uppercase);
 }
 
 .other {
@@ -90,6 +92,8 @@ button {
     padding-inline: 32px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    text-transform: var(--text-uppercase);
+    font-weight: bold;
 }
 
 #submit {
