@@ -18,6 +18,8 @@ jobs:
       matrix:
         node-version: [16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    env: 
+      DATABASE_URL: "postgres://pxwanxui:1uOtKZUXM2UceF8Bf60wSq92g6SSyjuJ@snuffleupagus.db.elephantsql.com/pxwanxui"
 
     steps:
     - uses: actions/checkout@v3
