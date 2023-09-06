@@ -28,9 +28,10 @@ describe("waiters app", function () {
     try {
       it("should be able to insert and retrieve a waiter into the waiters table", async () => {
         await WaitersApp.insertWaiter("kat");
+        const waiterRetrieval = await database.oneOrNone(`select waiter_name from waiters`);
         assert.deepStrictEqual(
           { waiter_name: "kat" },
-          await WaitersApp.retrieveWaiter()
+          waiterRetrieval
         );
       });
     } catch (error) {
@@ -41,9 +42,10 @@ describe("waiters app", function () {
     try {
       it("should be able to insert and retrieve another waiter into the waiters table", async () => {
         await WaitersApp.insertWaiter("bjorn");
+        const waiterRetrieval = await database.oneOrNone(`select waiter_name from waiters`);
         assert.deepStrictEqual(
           { waiter_name: "bjorn" },
-          await WaitersApp.retrieveWaiter()
+          waiterRetrieval
         );
       });
     } catch (error) {
@@ -175,7 +177,10 @@ describe("waiters app", function () {
         // setting the roster to default
         await WaitersApp.deleteWaiters();
 
-        assert.deepStrictEqual([], await WaitersApp.waitersData());
+        // selecting all the waiters data
+        const waiters = await database.manyOrNone("select * from waiters");
+
+        assert.deepStrictEqual([], waiters);
       });
     } catch (error) {
       console.log(error);

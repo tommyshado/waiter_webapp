@@ -2,6 +2,7 @@ const adminWaitersRoutes = waitersAppLogic => {
 
     const waitersRoute = async (req, res) => {
         const { username } = req.params;
+        const { weekDay } = req.body;
         const lowerLetterName = username.toLowerCase();
 
         const validateWaiterName = name => {
@@ -15,25 +16,20 @@ const adminWaitersRoutes = waitersAppLogic => {
             await waitersAppLogic.setWaiterId(lowerLetterName);
         };
 
-        const checkedCheckbox = async () => {
-            const waiters = await waitersAppLogic.availabilityData();
+        const isChecked = async () => {
             const dailyWaiters = await waitersAppLogic.availableWaiters();
-
-            for (let i = 0; i < waiters.length; i++) {
-                const shift = waiters[i].waiter_shift;
-                for (let j = 0; j < dailyWaiters.length; j++) {
-                    const dailyShift = dailyWaiters[j].day;
-                    if (shift === dailyShift) return "checked";
-                };
+            for (let i = 0; i < dailyWaiters.length; i++) {
+                const dailyShift = dailyWaiters[i].day;
+                if (dailyShift === weekDay) return true;
             };
-            return "not checked";
+            return false;
         };
 
         res.render("waiters", {
             waiterName: lowerLetterName,
             errorMessage: req.flash("error")[0],
             successMessage: req.flash("success")[0],
-            checkbox: await checkedCheckbox(),
+            isChecked: await isChecked(),
         });
     };
 
