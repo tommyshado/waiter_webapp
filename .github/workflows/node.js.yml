@@ -30,5 +30,4 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
       env:
-        DATABASE_URL: "postgres://tommyshado:yzrNH0TDiKbqCMAlNzWP62tWqWLQ6Oqy@dpg-cj2fspp8g3n1jkihu9dg-a.oregon-postgres.render.com/greetings_app_database?ssl=true"
         DATABASE_URL_TEST: "postgres://golmwpls:SbD9TpcrFYDmsQFk1NEMoFzFc0N0H4cc@snuffleupagus.db.elephantsql.com/golmwpls"
