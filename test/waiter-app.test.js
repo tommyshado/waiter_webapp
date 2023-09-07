@@ -54,6 +54,22 @@ describe("waiters app", function () {
     };
 
     try {
+      it("should be able to insert a waiter once and retrieve one waiter", async () => {
+        await WaitersApp.insertWaiter("bjorn");
+        await WaitersApp.insertWaiter("bjorn");
+
+        const waiterRetrieval = await database.manyOrNone(`select waiter_name from waiters`);
+        assert.deepStrictEqual(
+          [{ waiter_name: "bjorn" }],
+          waiterRetrieval
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    };
+
+    try {
       it("should be able to select and view the selected day to work on", async () => {
         await WaitersApp.insertWaiter("kat");
         await WaitersApp.setWaiterId("kat");

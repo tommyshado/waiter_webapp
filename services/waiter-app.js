@@ -1,15 +1,6 @@
 const waitersApp = db => {
-    const insertWaiter = async waiterName => {
-        const checksWaiter = await db.oneOrNone(
-            `select * from waiters where waiter_name = $1`,
-            waiterName
-        );
-        if (!checksWaiter) {
-            await db.none("insert into waiters (waiter_name) values ($1)", [
-                waiterName,
-            ]);
-        }
-    };
+
+    const insertWaiter = async waiterName => await db.none(`insert into waiters (waiter_name) values ('${waiterName}') on conflict do nothing`);
 
     let waitersId;
 
@@ -44,7 +35,7 @@ const waitersApp = db => {
                         `insert into availability (waiter_id, waiter_shift) values ($1, $2)`,
                         [waitersId, oneShift]
                     );
-                }
+                };
             });
         }
     };
