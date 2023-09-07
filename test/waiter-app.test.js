@@ -124,6 +124,33 @@ describe("waiters app", function () {
       console.log(error);
       throw error;
     };
+
+    try {
+      it("should be able to update the selected day", async () => {
+        await WaitersApp.insertWaiter("nicholas");
+        await WaitersApp.setWaiterId("nicholas");
+        await WaitersApp.selectShift("thursday");
+
+        await WaitersApp.insertWaiter("nicholas");
+        await WaitersApp.setWaiterId("nicholas");
+        await WaitersApp.selectShift("thursday");
+
+        await WaitersApp.insertWaiter("nicholas");
+        await WaitersApp.setWaiterId("nicholas");
+        await WaitersApp.selectShift("tuesday");
+
+        // update the selected day
+        await WaitersApp.updateSelectedDay('thursday');
+
+        assert.deepStrictEqual(
+          [{ day: "tuesday", waiter_name: "nicholas" }],
+          await WaitersApp.availableWaiters()
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    };
   });
 
   describe("admin", () => {
