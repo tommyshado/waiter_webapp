@@ -56,7 +56,7 @@ const waitersApp = db => {
 
     const updateSelectedDay = async shift =>
         await db.none(
-            `UPDATE shifts SET day = '${shift}' FROM waiters INNER JOIN availability ON waiters.waiter_id = availability.waiter_id WHERE waiters.waiter_name = :waiter_name AND shifts.day = day`
+            `delete from availability waiter_shift = ${shift}`
         ); // shifts.day insert the day I want to update
 
     const shifts = () => db.manyOrNone(`select waiter_shift from availability where waiter_id = '${waitersId}'`);

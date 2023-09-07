@@ -24,7 +24,7 @@ const adminWaitersRoutes = waitersAppLogic => {
                 shifts.forEach(shift => {
                     dailyShift === shift.waiter_shift 
                     ? shift.isChecked = true 
-                    : shift.isChecked = false;
+                    :null;
                 });
             };
             return shifts;
