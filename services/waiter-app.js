@@ -15,29 +15,14 @@ const waitersApp = db => {
     const selectShift = async shift => {
         const checksShift = Array.isArray(shift);
 
-        if (!checksShift) {
-            const checkWaiter = await db.oneOrNone(
-                `select * from availability where waiter_id = ${waitersId} and waiter_shift = '${shift}'`
-            );
-            if (!checkWaiter) {
-                await db.none(
-                    `insert into availability (waiter_id, waiter_shift) values ($1, $2)`,
-                    [waitersId, shift]
-                );
-            }
-        } else {
+        if (!checksShift || shift.length < 3) {
+            return null;
+
+        } else if (checksShift && shift.length >= 3) {
             shift.forEach(async oneShift => {
-                const checkWaiter = await db.oneOrNone(
-                    `select * from availability where waiter_id = ${waitersId} and waiter_shift = '${oneShift}'`
-                );
-                if (!checkWaiter) {
-                    await db.none(
-                        `insert into availability (waiter_id, waiter_shift) values ($1, $2)`,
-                        [waitersId, oneShift]
-                    );
-                };
+                await db.none(`insert into availability (waiter_id, waiter_shift) values ('${waitersId}', '${oneShift}') on conflict do nothing`);
             });
-        }
+        };
     };
 
     const availableWaiters = async () =>

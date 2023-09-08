@@ -41,9 +41,13 @@ const adminWaitersRoutes = waitersAppLogic => {
     const selectWorkDayRoute = async (req, res) => {
         const { weekDay } = req.body;
         const { username } = req.params;
+        const shifts = await waitersAppLogic.selectShift(weekDay);
         if (weekDay) {
-            await waitersAppLogic.selectShift(weekDay);
-            req.flash("success", "successfully selected available days.");
+            shifts ? shifts 
+            : shifts === null 
+            ? req.flash("error", "Select at least 3 days")
+            : req.flash("success", "successfully selected available days.");
+
         };
         res.redirect(`/waiters/${username}`);
     };
