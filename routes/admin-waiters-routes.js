@@ -46,6 +46,8 @@ const adminWaitersRoutes = waitersAppLogic => {
             shifts ? shifts 
             : shifts === null 
             ? req.flash("error", "Select at least 3 days")
+            : shifts === false 
+            ? req.flash("error", "Select 5 days to work in a week")
             : req.flash("success", "successfully selected available days.");
 
         };

@@ -18,10 +18,12 @@ const waitersApp = db => {
         if (!checksShift || shift.length < 3) {
             return null;
 
-        } else if (checksShift && shift.length >= 3) {
+        } else if (checksShift && shift.length >= 3 && shift.length <= 5) {
             shift.forEach(async oneShift => {
                 await db.none(`insert into availability (waiter_id, waiter_shift) values ('${waitersId}', '${oneShift}') on conflict do nothing`);
             });
+        } else {
+            return false;
         };
     };
 
