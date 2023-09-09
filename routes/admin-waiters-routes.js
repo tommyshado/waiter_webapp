@@ -14,16 +14,17 @@ const adminWaitersRoutes = waitersAppLogic => {
             await waitersAppLogic.insertWaiter(lowerLetterName);
             await waitersAppLogic.setWaiterId(lowerLetterName);
         };
-
+        
         const isChecked = async () => {
-            const dailyWaiters = await waitersAppLogic.availableWaiters();
-            const shifts = await waitersAppLogic.shifts();
+            const shifts = await waitersAppLogic.weekDays(); 
+            const waiterShifts = await waitersAppLogic.shifts();
 
-            for (let i = 0; i < dailyWaiters.length; i++) {
-                const dailyShift = dailyWaiters[i].day;
-                shifts.forEach(shift => {
-                    dailyShift === shift.waiter_shift 
-                    ? shift.isChecked = true 
+            for (let i = 0; i < shifts.length; i++) {
+                const dailyShift = shifts[i];
+                const dayShift = dailyShift.day;
+                waiterShifts.forEach(shift => {
+                    dayShift === shift.waiter_shift 
+                    ? dailyShift.isChecked = true
                     :null;
                 });
             };
@@ -34,7 +35,7 @@ const adminWaitersRoutes = waitersAppLogic => {
             waiterName: lowerLetterName,
             errorMessage: req.flash("error")[0],
             successMessage: req.flash("success")[0],
-            checked: await isChecked(),
+            shift: await isChecked(),
         });
     };
 
