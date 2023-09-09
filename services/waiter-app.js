@@ -39,6 +39,8 @@ const waitersApp = db => {
 
     const shifts = () => db.manyOrNone(`select waiter_shift from availability where waiter_id = '${waitersId}'`);
 
+    const weekDays = () => db.any("select day from shifts");
+
     const deleteWaiters = async () => await db.any("TRUNCATE TABLE waiters RESTART IDENTITY CASCADE");
 
     return {
@@ -47,6 +49,7 @@ const waitersApp = db => {
         selectShift,
         availableWaiters,
         updateSelectedDay,
+        weekDays,
         shifts,
         deleteWaiters,
     };
