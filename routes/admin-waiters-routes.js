@@ -27,6 +27,10 @@ const adminWaitersRoutes = waitersAppLogic => {
                     ? dailyShift.isChecked = true
                     :null;
                 });
+
+                if (!dailyShift.isChecked) {
+                    dailyShift.isChecked = false;
+                };
             };
             return shifts;
         };
