@@ -47,6 +47,12 @@ const adminWaitersRoutes = waitersAppLogic => {
         const { weekDay } = req.body;
         const { username } = req.params;
         const shifts = await waitersAppLogic.selectShift(weekDay);
+        const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
+        for (const day of days) {
+            if (!weekDay.includes(day)) await waitersAppLogic.updateSelectedDay(day);
+        };
+
         if (weekDay) {
             shifts ? shifts 
             : shifts === null 
