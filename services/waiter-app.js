@@ -34,7 +34,7 @@ const waitersApp = db => {
 
     const updateSelectedDay = async shift =>
         await db.none(
-            `delete from availability where waiter_shift = '${shift}'`
+            `delete from availability where waiter_shift = '${shift}' and waiter_id = '${waitersId}'`
         ); // shifts.day insert the day I want to update
 
     const shifts = () => db.manyOrNone(`select waiter_shift from availability where waiter_id = '${waitersId}'`);
