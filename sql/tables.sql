@@ -5,9 +5,7 @@ CREATE TABLE waiters (
 );
 create table shifts (
     shift_id serial not null primary key,
-    day text unique not null,
-    waiters_required int,
-    waiters_assigned int
+    day text unique not null
 );
 CREATE TABLE availability (
     waiter_id int,
