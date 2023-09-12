@@ -61,11 +61,13 @@ const WaitersApp = waitersApp(db);
 
 // routes instances
 const adminWaiterRoutesIns = adminWaitersRoutes(WaitersApp);
-const login = loginRoute();
+const login = loginRoute(WaitersApp);
 
 // ROUTES:
 
 app.get("/", login.homeRoute);
+
+app.post("/sendLoginDetails", login.sendLogin);
 
 app.get("/waiters/:username", adminWaiterRoutesIns.waitersRoute);
 
