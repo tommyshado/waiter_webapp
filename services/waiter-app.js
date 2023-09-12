@@ -1,12 +1,26 @@
 const waitersApp = db => {
 
-    const insertWaiter = async waiterName => await db.none(`insert into waiters (waiter_name) values ('${waiterName}') on conflict do nothing`);
+    const checksUser = async name => {
+        const query = await db.oneOrNone(`select waiter_name from workers where role = 'admin' and waiter_name = '${name}'`);
+        if (query) return true;
+        else return false;
+    };
+
+    const insertWaiter = async login => {
+        const isUser = await checksUser(login.emailOrName);
+        if (!isUser) {
+            await db.none(`insert into workers (waiter_name, role) values ('${login.emailOrName}', 'waiter') on conflict do nothing`);
+            return "waiter";
+        } else {
+            return "admin"
+        };
+    }
 
     let waitersId;
 
     const setWaiterId = async waiterName => {
         const availableWaiter = await db.oneOrNone(
-            `select waiter_id from waiters where waiter_name = $1`,
+            `select waiter_id from workers where waiter_name = $1`,
             waiterName
         );
         waitersId = availableWaiter.waiter_id;
@@ -29,7 +43,7 @@ const waitersApp = db => {
 
     const availableWaiters = async () =>
         await db.manyOrNone(
-            "SELECT waiters.waiter_name, shifts.day FROM waiters INNER JOIN availability ON waiters.waiter_id = availability.waiter_id INNER JOIN shifts ON availability.waiter_shift = shifts.day"
+            "SELECT workers.waiter_name, shifts.day FROM workers INNER JOIN availability ON workers.waiter_id = availability.waiter_id INNER JOIN shifts ON availability.waiter_shift = shifts.day"
         );
 
     const updateSelectedDay = async shift =>
@@ -41,7 +55,7 @@ const waitersApp = db => {
 
     const weekDays = () => db.any("select day from shifts");
 
-    const deleteWaiters = async () => await db.any("TRUNCATE TABLE waiters RESTART IDENTITY CASCADE");
+    const deleteWaiters = async () => await db.any("TRUNCATE TABLE workers RESTART IDENTITY CASCADE");
 
     return {
         insertWaiter,
