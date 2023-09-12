@@ -2,9 +2,14 @@
     <h2>Log in the Roster App</h2>
 
     <form action="/sendLoginDetails" method="post">
+        {{#if errorMessage}}
+        <p class="messages danger">
+            {{errorMessage}}
+        </p>
+        {{/if}}
         <div class="enterDetails">
             <label name="emailOrName" for="email-or-username"><strong>Email or Username</strong></label>
-            <input type="text">
+            <input name="emailOrName" type="text">
         </div>
 
         <div class="enterDetails">
@@ -18,3 +23,12 @@
     <span><a href="">Forgot your password?</a></span><br>
     <span>Don't have an account?</span> <a href="">Sign up</a>
 </div>
+
+<script>
+    setTimeout(function() {
+        const messages = document.querySelector(".messages");
+        if (messages) {
+            messages.style.display = "none";
+        };
+    }, 3000);
+</script>
