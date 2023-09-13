@@ -75,6 +75,8 @@ app.post("/waiters/:username", adminWaiterRoutesIns.selectWorkDayRoute);
 
 app.get("/days", adminWaiterRoutesIns.daysRoute);
 
+app.post("/days/:username", adminWaiterRoutesIns.waiterRoute);
+
 app.post("/reset", adminWaiterRoutesIns.resetRoute);
 
 const PORT = process.env.PORT || 3000;
