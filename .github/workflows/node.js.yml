@@ -32,4 +32,4 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
       env:
-        DATABASE_URL_TEST: "postgres://riifrchg:ZOkbq-J1cTbidL06vIHc6tTFPBsKYtG7@snuffleupagus.db.elephantsql.com/riifrchg"
+        DATABASE_URL_TEST: "postgres://elyifdyl:DA8caX8UfNVvqNrg5ZDX-MxaPfVnicdb@snuffleupagus.db.elephantsql.com/elyifdyl"
