@@ -29,7 +29,9 @@
                 {{/if}}
                   <ul>
                   {{#each waiters}}
+                  <form action="/days/{{this}}" method="post">
                     <li>{{this}}</li>
+                  </form>
                   {{/each}}
                   </ul>
                 </td>
