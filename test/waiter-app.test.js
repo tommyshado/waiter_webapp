@@ -66,7 +66,7 @@ describe("waiters app", function () {
 
   describe("waiters", () => {
     try {
-      it("should be able to insert and retrieve a waiter into the waiters table", async () => {
+      it("should be able to insert and retrieve a waiter", async () => {
         await WaitersApp.insertWaiter({
           emailOrName: "kat",
         });
@@ -81,7 +81,7 @@ describe("waiters app", function () {
     }
 
     try {
-      it("should be able to insert and retrieve another waiter into the waiters table", async () => {
+      it("should be able to insert and retrieve another waiter", async () => {
         await WaitersApp.insertWaiter({
           emailOrName: "bjorn",
         });
