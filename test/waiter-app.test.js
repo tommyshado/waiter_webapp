@@ -178,33 +178,6 @@ describe("waiters app", function () {
       throw error;
     };
 
-    try {
-      it("should be able to delete a waiter", async () => {
-        await WaitersApp.insertWaiter({
-          emailOrName: "anele",
-        });
-  
-        await WaitersApp.insertWaiter({
-          emailOrName: "nick",
-        });
-  
-        // deleting a waiter
-        await WaitersApp.deleteWaiter("nick");
-  
-        const waiters = await database.manyOrNone(`select * from workers`);
-  
-        assert.deepStrictEqual(
-          [
-            { waiter_id: 1, waiter_name: "tom", role: "admin" },
-            { waiter_id: 2, waiter_name: "anele", role: "waiter" },
-          ],
-          waiters
-        );
-      });
-    } catch (error) {
-      console.log(error);
-      throw error;
-    };
   });
 
   describe("admin", () => {
@@ -277,6 +250,34 @@ describe("waiters app", function () {
       console.log(error);
       throw error;
     }
+
+    try {
+      it("should be able to delete a waiter", async () => {
+        await WaitersApp.insertWaiter({
+          emailOrName: "anele",
+        });
+  
+        await WaitersApp.insertWaiter({
+          emailOrName: "nick",
+        });
+  
+        // deleting a waiter
+        await WaitersApp.deleteWaiter("nick");
+  
+        const waiters = await database.manyOrNone(`select * from workers`);
+  
+        assert.deepStrictEqual(
+          [
+            { waiter_id: 1, waiter_name: "tom", role: "admin" },
+            { waiter_id: 2, waiter_name: "anele", role: "waiter" },
+          ],
+          waiters
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    };
   });
 
   after(() => {
