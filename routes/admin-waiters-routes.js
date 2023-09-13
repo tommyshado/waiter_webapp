@@ -119,6 +119,12 @@ const adminWaitersRoutes = waitersAppLogic => {
         });
     };
 
+    const waiterRoute = async (req, res) => {
+        const { waiterName } = req.params;
+        await waitersAppLogic.deleteWaiter(waiterName);
+        res.redirect("/days");
+    };
+
     const resetRoute = async (req, res) => {
         await waitersAppLogic.deleteWaiters();
         req.flash("success", "successfully reseted the roster.");
@@ -129,6 +135,7 @@ const adminWaitersRoutes = waitersAppLogic => {
         waitersRoute,
         selectWorkDayRoute,
         daysRoute,
+        waiterRoute,
         resetRoute,
     };
 };
