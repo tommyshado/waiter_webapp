@@ -29,6 +29,41 @@ describe("waiters app", function () {
     }
   });
 
+  try {
+    it("should be able to get the days of the week", async () => {
+      const daysOfTheWeek = await WaitersApp.weekDays();
+      assert.deepStrictEqual(
+        [
+          {
+            day: "monday",
+          },
+          {
+            day: "tuesday",
+          },
+          {
+            day: "wednesday",
+          },
+          {
+            day: "thursday",
+          },
+          {
+            day: "friday",
+          },
+          {
+            day: "saturday",
+          },
+          {
+            day: "sunday",
+          },
+        ],
+        daysOfTheWeek
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+
   describe("waiters", () => {
     try {
       it("should be able to insert and retrieve a waiter into the waiters table", async () => {
@@ -141,7 +176,35 @@ describe("waiters app", function () {
     } catch (error) {
       console.log(error);
       throw error;
-    }
+    };
+
+    try {
+      it("should be able to delete a waiter", async () => {
+        await WaitersApp.insertWaiter({
+          emailOrName: "anele",
+        });
+  
+        await WaitersApp.insertWaiter({
+          emailOrName: "nick",
+        });
+  
+        // deleting a waiter
+        await WaitersApp.deleteWaiter("nick");
+  
+        const waiters = await database.manyOrNone(`select * from workers`);
+  
+        assert.deepStrictEqual(
+          [
+            { waiter_id: 1, waiter_name: "tom", role: "admin" },
+            { waiter_id: 2, waiter_name: "anele", role: "waiter" },
+          ],
+          waiters
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    };
   });
 
   describe("admin", () => {
