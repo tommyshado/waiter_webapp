@@ -57,7 +57,7 @@ const waitersApp = db => {
 
     const deleteWaiter = waiterName => db.any(`delete from workers where waiter_name = '${waiterName}'`);
 
-    const deleteWaiters = async () => await db.any("TRUNCATE TABLE workers RESTART IDENTITY CASCADE");
+    const deleteWaiters = async () => await db.any("delete from workers where role = 'waiter'");
 
     return {
         insertWaiter,
