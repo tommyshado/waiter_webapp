@@ -71,7 +71,7 @@ describe("waiters app", function () {
           emailOrName: "kat",
         });
         const waiterRetrieval = await database.oneOrNone(
-          `select waiter_name from workers`
+          `select waiter_name from workers where role = 'waiter'`
         );
         assert.deepStrictEqual({ waiter_name: "kat" }, waiterRetrieval);
       });
@@ -86,7 +86,7 @@ describe("waiters app", function () {
           emailOrName: "bjorn",
         });
         const waiterRetrieval = await database.oneOrNone(
-          `select waiter_name from workers`
+          `select waiter_name from workers where role = 'waiter'`
         );
         assert.deepStrictEqual({ waiter_name: "bjorn" }, waiterRetrieval);
       });
@@ -104,7 +104,7 @@ describe("waiters app", function () {
           emailOrName: "bjorn",
         });
         const waiterRetrieval = await database.oneOrNone(
-          `select waiter_name from workers`
+          `select waiter_name from workers where role = 'waiter'`
         );
         assert.deepStrictEqual({ waiter_name: "bjorn" }, waiterRetrieval);
       });
