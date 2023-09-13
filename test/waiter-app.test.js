@@ -100,7 +100,7 @@ describe("waiters app", function () {
     }
 
     try {
-      it("should not be able to select the same day twice", async () => {
+      it("should not be able to show the selected days when selected days are less than 3 days", async () => {
         await WaitersApp.insertWaiter({
           emailOrName: "kat",
         });
@@ -113,10 +113,7 @@ describe("waiters app", function () {
         await WaitersApp.setWaiterId("kat");
         await WaitersApp.selectShift("thursday");
 
-        assert.deepStrictEqual(
-          [{ waiter_name: "nicholas", day: "thursday" }],
-          await WaitersApp.availableWaiters()
-        );
+        assert.deepStrictEqual([], await WaitersApp.availableWaiters());
       });
     } catch (error) {
       console.log(error);
@@ -124,29 +121,20 @@ describe("waiters app", function () {
     }
 
     try {
-      it("should be able to update the selected day", async () => {
+      it("should be able to update the selected day by removing a day", async () => {
         await WaitersApp.insertWaiter({
           emailOrName: "nicholas",
         });
         await WaitersApp.setWaiterId("nicholas");
-        await WaitersApp.selectShift("thursday");
-
-        await WaitersApp.insertWaiter({
-          emailOrName: "nicholas",
-        });
-        await WaitersApp.setWaiterId("nicholas");
-        await WaitersApp.selectShift("thursday");
-
-        await WaitersApp.insertWaiter({
-          emailOrName: "nicholas",
-        });
-        await WaitersApp.setWaiterId("nicholas");
-        await WaitersApp.selectShift("tuesday");
+        await WaitersApp.selectShift(["thursday", "tuesday", "friday"]);
 
         // update the selected day
         await WaitersApp.updateSelectedDay("thursday");
         assert.deepStrictEqual(
-          [{ waiter_name: "nicholas", day: "tuesday" }],
+          [
+            { waiter_name: "nicholas", day: "tuesday" },
+            { waiter_name: "nicholas", day: "friday" },
+          ],
           await WaitersApp.availableWaiters()
         );
       });
