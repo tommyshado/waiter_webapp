@@ -55,6 +55,8 @@ const waitersApp = db => {
 
     const weekDays = () => db.any("select day from shifts");
 
+    const deleteWaiter = waiterName => db.any(`delete from workers where waiter_name = '${waiterName}'`);
+
     const deleteWaiters = async () => await db.any("TRUNCATE TABLE workers RESTART IDENTITY CASCADE");
 
     return {
@@ -65,6 +67,7 @@ const waitersApp = db => {
         updateSelectedDay,
         weekDays,
         shifts,
+        deleteWaiter,
         deleteWaiters,
     };
 };
