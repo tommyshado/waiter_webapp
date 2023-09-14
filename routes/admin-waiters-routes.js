@@ -120,8 +120,8 @@ const adminWaitersRoutes = waitersAppLogic => {
     };
 
     const waiterRoute = async (req, res) => {
-        const { waiterName } = req.params;
-        await waitersAppLogic.deleteWaiter(waiterName);
+        const { username } = req.params;
+        await waitersAppLogic.deleteWaiter(username);
         res.redirect("/days");
     };
 
