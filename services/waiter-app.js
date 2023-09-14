@@ -55,7 +55,7 @@ const waitersApp = db => {
 
     const weekDays = () => db.any("select day from shifts");
 
-    const deleteWaiter = waiterName => db.any(`delete from workers where waiter_name = '${waiterName}'`);
+    const deleteWaiter = async waiterName => await db.any(`delete from workers where waiter_name = '${waiterName}'`);
 
     const deleteWaiters = async () => await db.any("delete from workers where role = 'waiter'");
 
