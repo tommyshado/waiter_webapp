@@ -3,7 +3,7 @@
     <h2>Welcome to the Roster App</h2>
 
     {{#if successMessage}}
-    <div class="messages success">
+    <div class="messages success-messages">
       {{successMessage}}
     </div>
     {{/if}}
@@ -44,7 +44,7 @@
 </form>
 
 <form action="/reset" method="post">
-    <button type="submit" onclick="return resetOnClick()">Reset roster</button>
+    <button class="btnForUser" type="submit" onclick="return resetOnClick()">Reset roster</button>
 </form>
 
 

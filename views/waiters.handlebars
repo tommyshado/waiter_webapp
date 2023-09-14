@@ -4,13 +4,13 @@
     <h2>Welcome to the Roster App</h2>
 
     {{#if errorMessage}}
-    <div class="messages danger">
+    <div class="messages danger-messages">
       {{errorMessage}}
     </div>
     {{/if}}
 
     {{#if successMessage}}
-    <div class="messages success">
+    <div class="messages success-messages">
       {{successMessage}}
     </div>
     {{/if}}
@@ -50,7 +50,7 @@
     </div>
 
     <div id="submit">
-        <button type="submit">Submit roster</button>
+        <button class="btnForUser" type="submit">Submit roster</button>
     </div>
   </div>
 </form>
