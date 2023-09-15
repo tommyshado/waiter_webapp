@@ -101,7 +101,13 @@ const adminWaitersRoutes = waitersAppLogic => {
         dailyWaiters.forEach(waiter_ => {
             const selectedDay = waiter_.day;
             availableWaiters.forEach(waiter => {
-                waiter.day === selectedDay ? waiter.waiters.push(waiter_.waiter_name) : null;
+                if (waiter.day === selectedDay) {
+                    waiter.waiters.push({ 
+                        name: waiter_.waiter_name,
+                        id: waiter_.waiter_id,
+                        day: waiter.day,
+                    });
+                };
 
                 if (waiter.waiters.length > 3) {
                     waiter.className = "warning";
@@ -120,9 +126,9 @@ const adminWaitersRoutes = waitersAppLogic => {
     };
 
     const waiterRoute = async (req, res) => {
-        const { username } = req.params;
-        await waitersAppLogic.deleteWaiter(username);
-        req.flash("success", `successfully removed ${username}.`);
+        const { waiterId, day } = req.params;
+        await waitersAppLogic.deleteWaiter(waiterId, day);
+        req.flash("success", `successfully removed waiter.`);
         res.redirect("/days");
     };
 
