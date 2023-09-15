@@ -43,7 +43,7 @@ const waitersApp = db => {
 
     const availableWaiters = async () =>
         await db.manyOrNone(
-            "SELECT workers.waiter_name, shifts.day FROM workers INNER JOIN availability ON workers.waiter_id = availability.waiter_id INNER JOIN shifts ON availability.waiter_shift = shifts.day"
+            "SELECT workers.waiter_name, shifts.day, workers.waiter_id FROM workers INNER JOIN availability ON workers.waiter_id = availability.waiter_id INNER JOIN shifts ON availability.waiter_shift = shifts.day"
         );
 
     const updateSelectedDay = async shift =>
@@ -55,7 +55,10 @@ const waitersApp = db => {
 
     const weekDays = () => db.any("select day from shifts");
 
-    const deleteWaiter = async waiterName => await db.any(`delete from workers where waiter_name = '${waiterName}'`);
+    // grab the waiter id, and day that they selected from the parameters or url
+    // delete waiter records based on the waiter id and the selected day within the availability table
+    // this function takes in two parameters, waiter id and day both comes from the url
+    const deleteWaiter = async (waiterId, selectedDay) => await db.any(`delete from availability where waiter_id = '${waiterId}' and waiter_shift = '${selectedDay}'`);
 
     const deleteWaiters = async () => await db.any("delete from workers where role = 'waiter'");
 
