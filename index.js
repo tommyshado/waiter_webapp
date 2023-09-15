@@ -75,7 +75,7 @@ app.post("/waiters/:username", adminWaiterRoutesIns.selectWorkDayRoute);
 
 app.get("/days", adminWaiterRoutesIns.daysRoute);
 
-app.post("/days/:username", adminWaiterRoutesIns.waiterRoute);
+app.post("/days/:waiterId/:day", adminWaiterRoutesIns.waiterRoute);
 
 app.post("/reset", adminWaiterRoutesIns.resetRoute);
 
