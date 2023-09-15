@@ -149,6 +149,16 @@ input {
     padding-top: var(--other-padding);
 }
 
+.svgIcon {
+    color: var(--text-color);
+
+}
+
+.svgIcon:hover {
+    cursor: pointer;
+    color: var(--action-color);
+}
+
 @media (max-width: 600px) {
     th, td {
         padding: 4px;
