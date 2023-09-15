@@ -34,7 +34,10 @@ const waitersApp = db => {
 
         } else if (checksShift && shift.length >= 3 && shift.length <= 5) {
             shift.forEach(async oneShift => {
-                await db.none(`insert into availability (waiter_id, waiter_shift) values ('${waitersId}', '${oneShift}') on conflict do nothing`);
+                const availability = await db.any(`select * from availability where waiter_id = ${waitersId} and waiter_shift = '${oneShift}'`);
+                if (availability.length === 0) {
+                    await db.none(`insert into availability (waiter_id, waiter_shift) values ('${waitersId}', '${oneShift}')`);
+                };
             });
         } else {
             return false;
