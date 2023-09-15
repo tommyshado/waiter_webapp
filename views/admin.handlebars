@@ -30,7 +30,7 @@
                   <ul>
                   {{#each waiters}}
                   <form action="/days/{{id}}/{{day}}" method="post">
-                    <li><button type="submit">{{name}}</button></li>
+                    <li><button id="waiterBtn" type="submit">{{name}}</button></li>
                   {{/each}}
                   </form>
                   </ul>

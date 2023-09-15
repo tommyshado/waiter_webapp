@@ -4,8 +4,9 @@
     --text-color: #FFFFFF;
     --important-areas-color: #000000;
     --action-color: #1ed760;
-    --waring-color: orange;
-    --danger-color: red;
+    --other-color: #0E923C;
+    --warning-color: #F28123;
+    --danger-color: #FF4A1C;
 
     --border-radius: 10px;
     --padding: 10px;
@@ -50,6 +51,10 @@ li {
     list-style: none;
 }
 
+ul, li {
+    margin-bottom: 5px;
+}
+
 .table-container {
     overflow-x: var(--overflow);
 }
@@ -65,11 +70,11 @@ table, th, td {
 }
 
 .success {
-    background-color: var(--action-color);
+    background-color: var(--other-color);
 }
 
 .warning {
-    background-color: var(--waring-color);
+    background-color: var(--warning-color);
 }
 
 .danger {
@@ -120,6 +125,24 @@ input {
 
 .btnForUser:hover {
     transform: scale(1.1);
+}
+
+#waiterBtn {
+    background-color: var(--action-color);
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    border-radius: 100px;
+    font-size: inherit;
+    min-block-size: 48px;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    padding-block: 8px;
+    padding-inline: 32px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-transform: var(--text-uppercase);
+    color: var(--text-color);
 }
 
 #submit {
