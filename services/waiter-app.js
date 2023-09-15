@@ -54,9 +54,9 @@ const waitersApp = db => {
             `delete from availability where waiter_shift = '${shift}' and waiter_id = '${waitersId}'`
         ); // shifts.day insert the day I want to update
 
-    const shifts = () => db.manyOrNone(`select waiter_shift from availability where waiter_id = '${waitersId}'`);
+    const shifts = async () => db.manyOrNone(`select waiter_shift from availability where waiter_id = '${waitersId}'`);
 
-    const weekDays = () => db.any("select day from shifts");
+    const weekDays = async () => db.any("select day from shifts");
 
     // grab the waiter id, and day that they selected from the parameters or url
     // delete waiter records based on the waiter id and the selected day within the availability table
