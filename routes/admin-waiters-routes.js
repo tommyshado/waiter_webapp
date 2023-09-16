@@ -118,6 +118,7 @@ const adminWaitersRoutes = waitersAppLogic => {
                 };
             });
         });
+        console.log(availableWaiters);
 
         res.render("admin", {
             waiterNames: availableWaiters,

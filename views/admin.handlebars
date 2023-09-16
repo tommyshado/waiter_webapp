@@ -51,7 +51,7 @@
                   <ul>
                   {{#each waiters}}
                   <form action="/days/{{id}}/{{day}}" method="post">
-                    <li><button id="waiterBtn" type="submit">{{name}}</button></li>
+                    <li><button id="waiterBtn" type="submit" onclick="return resetOnClick()">{{name}}</button></li>
                   {{/each}}
                   </form>
                   </ul>

@@ -128,7 +128,7 @@ input {
 }
 
 #waiterBtn {
-    background-color: var(--action-color);
+    background-color: var(--text-color);
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
     position: relative;
@@ -142,7 +142,7 @@ input {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     text-transform: var(--text-uppercase);
-    color: var(--text-color);
+    color: var(--body-color);
 }
 
 #submit {
