@@ -1,5 +1,5 @@
 
-const loginRoute = waitersAppLogic => {
+const loginRoute = (waitersAppLogic, regexPattern) => {
     const homeRoute = (req, res) => {
         res.render("index", {
             errorMessage: req.flash("error")[0]
@@ -9,13 +9,7 @@ const loginRoute = waitersAppLogic => {
     const sendLogin = async (req, res) => {
         const { emailOrName, password } = req.body;
 
-        const validateWaiterName = () => {
-            const regexPattern = /^[a-zA-Z]+$/;
-            const regexPatternTest = regexPattern.test(emailOrName);
-            return regexPatternTest;
-        };
-
-        if (emailOrName && validateWaiterName()) {
+        if (emailOrName && regexPattern(emailOrName)) {
             const details = {
                 emailOrName,
                 password
