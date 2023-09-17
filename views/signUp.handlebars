@@ -5,6 +5,11 @@
         {{#if messages.error}}
         <div class="danger-messages">{{messages.error}}</div>
         {{/if}}
+
+        {{#if messages.success}}
+        <div class="success-messages">{{messages.success}}</div>
+        {{/if}}
+
         <div class="enterDetails">
             <label for="name"><strong>Waiter name</strong></label>
             <input name="name" type="text" placeholder="Enter your name">

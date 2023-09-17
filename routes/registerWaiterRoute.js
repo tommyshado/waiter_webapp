@@ -24,6 +24,7 @@ const RegisterWaiterRoute = (waiterRegistration, regexPattern, bcrypt) => {
                                 hash
                             };
                             await waiterRegistration.registerWaiter(waiterSignUp);
+                            req.flash("success", "successfully registered a waiter.");
                         };
                     });
 
