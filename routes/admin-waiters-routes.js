@@ -1,18 +1,15 @@
-const adminWaitersRoutes = waitersAppLogic => {
+const adminWaitersRoutes = (waitersAppLogic, regexPattern) => {
 
     const waitersRoute = async (req, res) => {
         const { username } = req.params;
         const emailOrName = username.toLowerCase();
 
-        const validateWaiterName = name => {
-            const regexPattern = /^[a-zA-Z]+$/;
-            const regexPatternTest = regexPattern.test(name);
-            return regexPatternTest ? regexPatternTest : req.flash("error", "Invalid waiter name. Please enter name. abcdeABCDE.");
-        };
-
-        if (username !== ":username" && validateWaiterName(emailOrName)) {
+        if (username !== ":username" && regexPattern(emailOrName)) {
             await waitersAppLogic.insertWaiter({emailOrName});
             await waitersAppLogic.setWaiterId(emailOrName);
+        } else {
+            req.flash("error", "Invalid waiter name. Please enter name. abcdeABCDE.");
+            res.redirect("/");
         };
         
         const isChecked = async () => {
