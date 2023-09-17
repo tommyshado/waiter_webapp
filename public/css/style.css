@@ -1,167 +1,180 @@
 :root {
-    /* color scheme from coolors.co */
-    --body-color: #242424;
-    --text-color: #FFFFFF;
-    --important-areas-color: #000000;
-    --action-color: #1ed760;
-    --other-color: #0E923C;
-    --warning-color: #F28123;
-    --danger-color: #FF4A1C;
+  /* color scheme from coolors.co */
+  --body-color: #242424;
+  --text-color: #ffffff;
+  --important-areas-color: #000000;
+  --action-color: #1ed760;
+  --other-color: #0e923c;
+  --warning-color: #f28123;
+  --danger-color: #ff4a1c;
 
-    --border-radius: 10px;
-    --padding: 10px;
-    --other-padding: 3em;
-    --margin: 48px 0px;
-    --text-uppercase: uppercase;
-    --overflow: auto;
+  --border-radius: 10px;
+  --padding: 10px;
+  --other-padding: 3em;
+  --margin: 48px 0px;
+  --text-uppercase: uppercase;
+  --overflow: auto;
 }
 
 body {
-    color: var(--text-color);
-    background-color: var(--body-color);
+  color: var(--text-color);
+  background-color: var(--body-color);
 }
 
 .container {
-    display: grid;
-    text-transform: var(--text-uppercase);
+  display: grid;
+  text-transform: var(--text-uppercase);
 }
 
 .other {
-    font-weight: 700;
-    padding: 20px 0px 20px 35px;
-    margin-bottom: 0px;
-    border-bottom: none;
+  font-weight: 700;
+  padding: 20px 0px 20px 35px;
+  margin-bottom: 0px;
+  border-bottom: none;
 }
 
 nav {
-    background-color: var(--important-areas-color);
-    border-radius: var(--border-radius);
-    font-size: 1.5em;
+  background-color: var(--important-areas-color);
+  border-radius: var(--border-radius);
+  font-size: 1.5em;
 }
 
 .waiters-page {
-    margin: var(--margin);
+  margin: var(--margin);
 }
 
 .admin-page {
-    margin: var(--margin);
+  margin: var(--margin);
 }
 
 li {
-    list-style: none;
+  list-style: none;
 }
 
-ul, li {
-    margin-bottom: 5px;
+ul,
+li {
+  margin-bottom: 5px;
 }
 
 .table-container {
-    overflow-x: var(--overflow);
+  overflow-x: var(--overflow);
 }
 
 table {
-    width: 50%;
+  width: 50%;
 }
 
-table, th, td {
-    border-bottom: 1px solid var(--text-color);
-    border-collapse: collapse;
-    padding: var(--padding);
+table,
+th,
+td {
+  border-bottom: 1px solid var(--text-color);
+  border-collapse: collapse;
+  padding: var(--padding);
 }
 
 .success {
-    background-color: var(--other-color);
+  background-color: var(--other-color);
 }
 
 .warning {
-    background-color: var(--warning-color);
+  background-color: var(--warning-color);
 }
 
 .danger {
-    background-color: var(--danger-color);
+  background-color: var(--danger-color);
 }
 
 .success-messages {
-    color: var(--action-color);
+  color: var(--action-color);
 }
 
 .danger-messages {
-    color: var(--danger-color);
+  color: var(--danger-color);
 }
 
 .checkBox {
-    accent-color: var(--action-color);
-    transition: all 0.3s ease-in-out;
+  accent-color: var(--action-color);
+  transition: all 0.3s ease-in-out;
 }
 
 .checkBox:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 input {
-    font-size: 1em;
-    font-weight: 500;
-    box-shadow: inset 0 0 0 1px var(--text-color);
-    color: var(--important-areas-color);
+  font-size: 1em;
+  font-weight: 500;
+  box-shadow: inset 0 0 0 1px var(--text-color);
+  color: var(--important-areas-color);
 }
 
 .btnForUser {
-    background-color: var(--action-color);
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    position: relative;
-    border-radius: 500px;
-    font-size: inherit;
-    min-block-size: 48px;
-    -webkit-box-align: center;
-    -webkit-box-pack: center;
-    padding-block: 8px;
-    padding-inline: 32px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    text-transform: var(--text-uppercase);
-    font-weight: bold;
+  background-color: var(--action-color);
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  border-radius: 500px;
+  font-size: inherit;
+  min-block-size: 48px;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  padding-block: 8px;
+  padding-inline: 32px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-transform: var(--text-uppercase);
+  font-weight: bold;
 }
 
 .btnForUser:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 #waiterBtn {
-    background-color: var(--text-color);
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    position: relative;
-    border-radius: 100px;
-    font-size: inherit;
-    min-block-size: 48px;
-    -webkit-box-align: center;
-    -webkit-box-pack: center;
-    padding-block: 8px;
-    padding-inline: 32px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    text-transform: var(--text-uppercase);
-    color: var(--body-color);
+  background-color: var(--text-color);
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  border-radius: 100px;
+  font-size: inherit;
+  min-block-size: 48px;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  padding-block: 8px;
+  padding-inline: 32px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-transform: var(--text-uppercase);
+  color: var(--body-color);
 }
 
 #submit {
-    padding-top: var(--other-padding);
+  padding-top: var(--other-padding);
 }
 
 .svgIcon {
-    color: var(--text-color);
-
+  color: var(--text-color);
 }
 
 .svgIcon:hover {
-    cursor: pointer;
-    color: var(--action-color);
+  cursor: pointer;
+  color: var(--action-color);
+}
+
+.other {
+  display: flex;
+}
+
+.anchor {
+  display: flex;
+  align-items: center;
+  padding-right: 25em;
 }
 
 @media (max-width: 600px) {
-    th, td {
-        padding: 4px;
-        font-size: 12px;
-    }
+  th,
+  td {
+    padding: 4px;
+    font-size: 12px;
+  }
 }
