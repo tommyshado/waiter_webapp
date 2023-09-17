@@ -27,15 +27,15 @@
   <div class="waiters-page">
     <h2>Welcome to the Roster App</h2>
 
-    {{#if errorMessage}}
+    {{#if messages.error}}
     <div class="messages danger-messages">
-      {{errorMessage}}
+      {{messages.error}}
     </div>
     {{/if}}
 
-    {{#if successMessage}}
+    {{#if messages.success}}
     <div class="messages success-messages">
-      {{successMessage}}
+      {{messages.success}}
     </div>
     {{/if}}
 

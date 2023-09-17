@@ -34,8 +34,6 @@ const adminWaitersRoutes = (waitersAppLogic, regexPattern) => {
 
         res.render("waiters", {
             waiterName: emailOrName,
-            errorMessage: req.flash("error")[0],
-            successMessage: req.flash("success")[0],
             shift: await isChecked(),
         });
     };
@@ -118,7 +116,6 @@ const adminWaitersRoutes = (waitersAppLogic, regexPattern) => {
 
         res.render("admin", {
             waiterNames: availableWaiters,
-            successMessage: req.flash("success")[0],
         });
     };
 
