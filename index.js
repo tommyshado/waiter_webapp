@@ -6,12 +6,20 @@ import pgPromise from "pg-promise";
 import flash from "express-flash";
 import session from "express-session";
 
+// bcrypt.js import
+import bcrypt from "bcrypt";
+
 // services imports
-import waitersApp from "./services/waiter-app.js";
+import waitersApp from "./services/waiterApp.js";
+import WaiterRegistration from "./services/waiterRegistration.js";
 
 // routes imports
-import adminWaitersRoutes from "./routes/admin-waiters-routes.js";
+import adminWaitersRoutes from "./routes/adminWaiterRoutes.js";
 import loginRoute from "./routes/login.js";
+import RegisterWaiterRoute from "./routes/registerWaiterRoute.js";
+
+// regex pattern module import
+import regexPatternTest from "./regexPattern.js";
 
 const app = express();
 const pgp = pgPromise();
@@ -56,16 +64,25 @@ app.set("view engine", "handlebars");
 app.set("views", "./views");
 
 const db = pgp(config);
+
 // services instances
 const WaitersApp = waitersApp(db);
+const WaiterRosterRegistration = WaiterRegistration(db);
 
 // routes instances
-const adminWaiterRoutesIns = adminWaitersRoutes(WaitersApp);
-const login = loginRoute(WaitersApp);
+const adminWaiterRoutesIns = adminWaitersRoutes(WaitersApp, regexPatternTest);
+const login = loginRoute(WaitersApp, regexPatternTest);
+const rosterRegister = RegisterWaiterRoute(WaiterRosterRegistration, regexPatternTest, bcrypt);
 
 // ROUTES:
 
 app.get("/", login.homeRoute);
+
+// create a get route for the registration of waiters in the roster
+app.get("/signUp", rosterRegister.signUp);
+
+// create a post route for the registration of waiters in the roster
+app.post("/registerwaiter", rosterRegister.registerWiater);
 
 app.post("/sendLoginDetails", login.sendLogin);
 
