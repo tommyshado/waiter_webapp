@@ -1,0 +1,19 @@
+
+<form action="/registerwaiter" method="post">
+    <div class="signUpContainer">
+        <h2>Register waiter.</h2>
+        {{#if messages.error}}
+        <div class="danger-messages">{{messages.error}}</div>
+        {{/if}}
+        <div class="enterDetails">
+            <label for="name"><strong>Waiter name</strong></label>
+            <input name="name" type="text" placeholder="Enter your name">
+        </div>
+
+        <div class="enterDetails">
+            <label for="password"><strong>Create a password</strong></label>
+            <input name="password" type="text" placeholder="Create a password">
+        </div>
+        <button type="submit">Register waiter</button>
+    </div>
+</form>
