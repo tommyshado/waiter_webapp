@@ -10,9 +10,9 @@
     <h2>Log in the Roster App</h2>
 
     <form action="/sendLoginDetails" method="post">
-        {{#if errorMessage}}
+        {{#if messages.error}}
         <div class="messages danger-messages">
-            {{errorMessage}}
+            {{messages.error}}
         </div>
         {{/if}}
         {{#if messages.success}}
