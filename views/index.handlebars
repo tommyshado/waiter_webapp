@@ -11,18 +11,22 @@
 
     <form action="/sendLoginDetails" method="post">
         {{#if errorMessage}}
-        <p class="messages danger-messages">
+        <div class="messages danger-messages">
             {{errorMessage}}
-        </p>
+        </div>
         {{/if}}
+        {{#if messages.success}}
+        <div class="messages success-messages">{{messages.success}}</div>
+        {{/if}}
+
         <div class="enterDetails">
             <label name="emailOrName" for="email-or-username"><strong>Username</strong></label>
             <input name="emailOrName" type="text" placeholder="Enter your name">
         </div>
 
         <div class="enterDetails">
-            <label name="password" for="password"><strong>Password</strong></label>
-            <input type="text" placeholder="Enter your password">
+            <label for="password"><strong>Password</strong></label>
+            <input name="password" type="text" placeholder="Enter your password">
         </div>
 
         <div id="submit">
