@@ -14,7 +14,17 @@ const waitersApp = db => {
         } else {
             return "admin"
         };
-    }
+    };
+
+    const getWaiter = async (waiterName) => {
+        const name = waiterName.emailOrName;
+        if (name) {
+            const waiter = await db.oneOrNone(`select * from waiter_registration where waiter_name = '${name}' and role = 'waiter'`);
+
+            if (waiter) return "waiter";
+            else return "admin";
+        };
+    };
 
     let waitersId;
 
@@ -67,6 +77,7 @@ const waitersApp = db => {
 
     return {
         insertWaiter,
+        getWaiter,
         setWaiterId,
         selectShift,
         availableWaiters,
