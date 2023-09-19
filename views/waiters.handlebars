@@ -1,12 +1,13 @@
-<nav class="other">
-    <div class="anchor">
+<nav class="bg-[#242424]">
+  <div class="flex flex-row">
+    <div class="basis-1/4">
       <a href="/">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="40"
           height="40"
           fill="currentColor"
-          class="bi bi-arrow-left-circle-fill svgIcon"
+          class="bi bi-arrow-left-circle-fill fill-[#1ed760] hover:fill-[#0e923c]"
           viewBox="0 0 16 16"
         >
           <path
@@ -15,11 +16,15 @@
         </svg>
       </a>
     </div>
-    <center>
-      <h1>
-        Waiters App | Roster App
-      </h1>
-    </center>
+
+    <div class="basis-1/2">
+      <center>
+        <h1>
+          Waiters App | Roster App
+        </h1>
+      </center>
+    </div>
+  </div>
 </nav>
 
 <form action="/waiters/{{waiterName}}" method="post">
@@ -40,7 +45,7 @@
     {{/if}}
 
     <div class="table-container">
-      <table>
+      <table class="table-auto">
         <tr>
           <th>Monday</th>
           <th>Tuesday</th>
@@ -52,7 +57,7 @@
         </tr>
 
         <tbody>
-          <tr>
+          <tr class="even:bg-slate-50">
           {{#each shift}}
             <td>
               <label for="Monday">
@@ -60,7 +65,7 @@
                   type="checkbox"
                   name="weekDay"
                   value="{{day}}"
-                  class="checkBox"
+                  class="w-8 h-8 checked:accent-[#0e923c]"
                   {{#if isChecked}}
                   checked
                   {{/if}}
@@ -74,7 +79,7 @@
     </div>
 
     <div id="submit">
-        <button class="btnForUser" type="submit">Submit roster</button>
+        <button class="bg-[#1ed760] hover:bg-[#0e923c]" type="submit">Submit roster</button>
     </div>
   </div>
 </form>

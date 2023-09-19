@@ -1,20 +1,53 @@
-
 <form action="/registerwaiter" method="post">
-    <div class="signUpContainer">
-        <h2>Register waiter.</h2>
-        {{#if messages.error}}
-        <div class="messages danger-messages">{{messages.error}}</div>
-        {{/if}}
+  <nav class="bg-[#242424]">
+    <div class="flex flex-row">
+      <div class="basis-1/4">
+        <a href="/">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="40"
+            height="40"
+            fill="currentColor"
+            class="bi bi-arrow-left-circle-fill fill-[#1ed760] hover:fill-[#0e923c]"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
+            />
+          </svg>
+        </a>
+      </div>
 
-        <div class="enterDetails">
-            <label for="name"><strong>Waiter name</strong></label>
-            <input name="name" type="text" placeholder="Enter your name">
-        </div>
-
-        <div class="enterDetails">
-            <label for="password"><strong>Create a password</strong></label>
-            <input name="password" type="text" placeholder="Create a password">
-        </div>
-        <button id="registerBtn" type="submit">Register waiter</button>
+      <div class="basis-1/2">
+        <center>
+          <h1>
+            Waiters App | Roster App
+          </h1>
+        </center>
+      </div>
     </div>
+  </nav>
+  <div class="signUpContainer">
+    <h2><strong>Register a waiter.</strong></h2>
+    {{#if messages.error}}
+      <div class="messages danger-messages">{{messages.error}}</div>
+    {{/if}}
+
+    <div class="enterDetails">
+      <label for="name">Waiter name</label>
+      <input name="name" type="text" placeholder="Enter your name" />
+    </div>
+
+    <div class="enterDetails">
+      <label for="password">Create a password</label>
+      <input
+        name="password"
+        type="text"
+        placeholder="Create a password"
+      />
+    </div>
+    <button class="bg-[#1ed760] hover:bg-[#0e923c]" type="submit">
+      <strong>Register waiter</strong>
+    </button>
+  </div>
 </form>

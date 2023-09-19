@@ -1,40 +1,52 @@
-<nav>
-    <center>
-    <h1>
+<nav class="bg-[#242424]">
+  <center>
+    <h1 class="text-2xl">
+      <strong>
         Waiters App | Roster App
+      </strong>
     </h1>
-    </center>
+  </center>
 </nav>
 
 <div class="login-page">
-    <h2>Log in the Roster App</h2>
+  <h2 class="text-lg"><strong>Log in the Roster App</strong></h2>
 
-    <form action="/sendLoginDetails" method="post">
-        {{#if messages.error}}
-        <div class="messages danger-messages">
-            {{messages.error}}
-        </div>
-        {{/if}}
-        {{#if messages.success}}
-        <div class="messages success-messages">{{messages.success}}</div>
-        {{/if}}
+  <form action="/sendLoginDetails" method="post">
+    {{#if messages.error}}
+      <div class="messages danger-messages">
+        {{messages.error}}
+      </div>
+    {{/if}}
+    {{#if messages.success}}
+      <div class="messages success-messages">{{messages.success}}</div>
+    {{/if}}
 
-        <div class="enterDetails">
-            <label name="emailOrName" for="email-or-username"><strong>Username</strong></label>
-            <input name="emailOrName" type="text" placeholder="Enter your name">
-        </div>
+    <div class="enterDetails">
+      <label name="emailOrName" for="email-or-username"><strong
+        >Username</strong></label>
+      <input
+        name="emailOrName"
+        type="text"
+        placeholder="Enter your name"
+      />
+    </div>
 
-        <div class="enterDetails">
-            <label for="password"><strong>Password</strong></label>
-            <input name="password" type="text" placeholder="Enter your password">
-        </div>
+    <div class="enterDetails">
+      <label for="password"><strong>Password</strong></label>
+      <input
+        name="password"
+        type="text"
+        placeholder="Enter your password"
+      />
+    </div>
 
-        <div id="submit">
-            <button class="btnForUser" type="submit">Login</button>
-        </div>
+    <div id="submit">
+      <button class="bg-[#1ed760] hover:bg-[#0e923c]" type="submit"><strong>Login</strong></button>
+    </div>
 
-    </form>
+  </form>
 
-    {{!-- <span><a href="">Forgot your password?</a></span><br> --}}
-    <span>Not registered?</span> <a id="registerAnchor" href="/signUp">Register here</a>
+  <span><a class="text-[#1ed760]" href="/generatePassword">Forgot your password?</a></span><br>
+  <span><strong>Not registered?</strong></span>
+  <a class="text-[#1ed760]" href="/signUp">Register here</a>
 </div>
