@@ -71,7 +71,7 @@ const WaiterRosterRegistration = WaiterRegistration(db);
 
 // routes instances
 const adminWaiterRoutesIns = adminWaitersRoutes(WaitersApp, regexPatternTest);
-const login = loginRoute(WaitersApp, regexPatternTest);
+const login = loginRoute(WaiterRosterRegistration, WaitersApp, regexPatternTest, bcrypt);
 const rosterRegister = RegisterWaiterRoute(WaiterRosterRegistration, regexPatternTest, bcrypt);
 
 // ROUTES:
