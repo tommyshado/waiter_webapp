@@ -1,9 +1,6 @@
-
-const loginRoute = (waitersAppLogic, regexPattern) => {
+const loginRoute = (signUpLogic, waitersAppLogic, regexPattern, bcrypt) => {
     const homeRoute = (req, res) => {
-        res.render("index", {
-            errorMessage: req.flash("error")[0]
-        });
+        res.render("index");
     };
 
     const sendLogin = async (req, res) => {
@@ -15,19 +12,40 @@ const loginRoute = (waitersAppLogic, regexPattern) => {
                 password
             };
 
-            const adminOrWaiter = await waitersAppLogic.insertWaiter(details);
-            await waitersAppLogic.setWaiterId(details.emailOrName);
+            const hashPassword = await signUpLogic.retrieveHash(details.emailOrName);
+            // Load hash from your password DB.
+            bcrypt.compare(details.password, hashPassword.password, async (error, result) => {
+                // result == true
+                if (error) {
+                    console.error(error);
+                    res.redirect("/");
+                } else if (result) {
+                    // case : hashed password matches the entered password from the user
+                    const adminOrWaiter = await waitersAppLogic.getWaiter(details);
+                    await waitersAppLogic.setWaiterId(details.emailOrName);
 
-            // when the waiter is found redirect to the waiters page
-            if (adminOrWaiter === "waiter") res.redirect(`/waiters/${emailOrName}`);
-            // otherwise, redirect to the admins page
-            else res.redirect("/days");
+                    // when the waiter is found redirect to the waiters page
+                    if (adminOrWaiter === "waiter") {
+                        req.flash("success", "Logged in successfully.");
+                        res.redirect(`/waiters/${emailOrName}`);
+                    } else {
+                        req.flash("success", "Logged in successfully.");
+                        // otherwise, redirect to the admins page
+                        res.redirect("/days");
+                    };
+
+                } else {
+                    // case: user not registered in the roster
+                    req.flash("error", "Not registered in the roster register.");
+                    res.redirect("/");
+                };
+            });
 
         } else {
             req.flash("error", "Invalid waiter name. Please enter name. abcdeABCDE.");
             res.redirect("/");
         };
-        
+
     };
 
     return {
