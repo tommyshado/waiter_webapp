@@ -8,7 +8,7 @@ const adminWaitersRoutes = (waitersAppLogic, regexPattern) => {
             await waitersAppLogic.insertWaiter({emailOrName});
             await waitersAppLogic.setWaiterId(emailOrName);
         } else {
-            req.flash("error", "Invalid waiter name. Please enter name. abcdeABCDE.");
+            req.flash("error", "Invalid waiter or admin name. Please enter name. abcdeABCDE.");
             res.redirect("/");
         };
         
@@ -44,11 +44,14 @@ const adminWaitersRoutes = (waitersAppLogic, regexPattern) => {
         const shifts = await waitersAppLogic.selectShift(weekDay);
         const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
-        for (const day of days) {
-            if (!weekDay.includes(day)) await waitersAppLogic.updateSelectedDay(day);
-        };
-
+        
         if (weekDay) {
+            // loop over the length of days variable and
+            for (const day of days) {
+                // check if current day is in the weekDay array then update
+                if (!weekDay.includes(day)) await waitersAppLogic.updateSelectedDay(day);
+            };
+            
             shifts ? shifts 
             : shifts === null 
             ? req.flash("error", "Select at least 3 days")
@@ -56,8 +59,11 @@ const adminWaitersRoutes = (waitersAppLogic, regexPattern) => {
             ? req.flash("error", "Select 5 days to work in a week")
             : req.flash("success", "successfully selected available days.");
 
-        };
+        } else {
+            req.flash("error", "Select 5 days to work in a week");
+        }
         res.redirect(`/waiters/${username}`);
+        
     };
 
     const daysRoute = async (req, res) => {
