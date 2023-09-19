@@ -1,4 +1,4 @@
-<nav class="bg-[#242424]">
+<nav class="bg-[#242424] py-2">
   <center>
     <h1 class="text-2xl font-bold">
       <strong>
@@ -8,8 +8,8 @@
   </center>
 </nav>
 
-<div class="login-page">
-  <h2 class="text-lg"><strong>Log in the Roster App</strong></h2>
+<div class="login-page py-2">
+  <h2 class="text-lg py-2"><strong>Log in the Roster App</strong></h2>
 
   <form action="/sendLoginDetails" method="post">
     {{#if messages.error}}
@@ -21,22 +21,25 @@
       <div class="messages success-messages">{{messages.success}}</div>
     {{/if}}
 
-    <div class="enterDetails">
+    <div class="py-2">
       <label name="emailOrName" for="email-or-username"><strong
         >Username</strong></label>
       <input
+        class="text-[#000000]"
         name="emailOrName"
         type="text"
         placeholder="Enter your name"
       />
     </div>
 
-    <div class="enterDetails">
+    <div class="py-2" x-data="{ show: true }">
       <label for="password"><strong>Password</strong></label>
       <input
+        class="text-[#000000]"
         name="password"
         type="text"
         placeholder="Enter your password"
+        :type="show ? 'password' : 'text'"
       />
     </div>
 
@@ -47,6 +50,6 @@
   </form>
 
   <span><a class="text-[#1ed760]" href="/generatePassword">Forgot your password?</a></span><br>
-  <span><strong>Not registered?</strong></span>
+  <span class="text-[#242424]"><strong>Not registered?</strong></span>
   <a class="text-[#1ed760]" href="/signUp">Register here</a>
 </div>

@@ -1,5 +1,5 @@
 <form action="/registerwaiter" method="post">
-  <nav class="bg-[#242424]">
+  <nav class="bg-[#242424] py-2">
     <div class="flex flex-row">
       <div class="basis-1/4">
         <a href="/">
@@ -27,27 +27,37 @@
       </div>
     </div>
   </nav>
-  <div class="signUpContainer">
-    <h2><strong>Register a waiter.</strong></h2>
+  <div class="py-2">
+    <h2 class="text-lg py-2"><strong>Register a waiter.</strong></h2>
     {{#if messages.error}}
-      <div class="messages danger-messages">{{messages.error}}</div>
+      <div class="messages danger-messages py-2">{{messages.error}}</div>
     {{/if}}
 
-    <div class="enterDetails">
+    <div class="py-2">
       <label for="name">Waiter name</label>
-      <input name="name" type="text" placeholder="Enter your name" />
+      <input
+        class="text-[#000000]"
+        name="name"
+        type="text"
+        placeholder="Enter your name"
+      />
     </div>
 
-    <div class="enterDetails">
+    <div class="py-2" x-data="{show: true}">
       <label for="password">Create a password</label>
       <input
+        class="text-[#000000]"
         name="password"
         type="text"
         placeholder="Create a password"
+        :type="show ? 'password' : 'text'"
       />
     </div>
-    <button class="bg-[#1ed760] hover:bg-[#0e923c]" type="submit">
-      <strong>Register waiter</strong>
-    </button>
+
+    <div class="py-6">
+      <button class="bg-[#1ed760] hover:bg-[#0e923c]" type="submit">
+        <strong>Register waiter</strong>
+      </button>
+    </div>
   </div>
 </form>
