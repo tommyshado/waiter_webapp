@@ -25,6 +25,7 @@ const RegisterWaiterRoute = (waiterRegistration, regexPattern, bcrypt) => {
                             };
                             await waiterRegistration.registerWaiter(waiterSignUp);
                             req.flash("success", "successfully registered a waiter.");
+                            res.redirect("/");
                         };
                     });
 
@@ -34,7 +35,7 @@ const RegisterWaiterRoute = (waiterRegistration, regexPattern, bcrypt) => {
                 };
 
             } else {
-                req.flash("error", "Password must be 3 or characters");
+                req.flash("error", "Password must be 3 or more characters");
                 res.redirect("/signUp");
             };
 
