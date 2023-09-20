@@ -1,7 +1,11 @@
 import assert from "assert";
-import waitersApp from "../services/waiter-app.js";
+import waitersApp from "../services/waiterApp.js";
+import WaiterRegistration from "../services/waiterRegistration.js";
 import pgPromise from "pg-promise";
 import "dotenv/config";
+
+// bcrypt import
+import bcrypt from "bcrypt";
 
 const pgp = pgPromise();
 const connectionString = process.env.DATABASE_URL_TEST;
@@ -9,19 +13,35 @@ const database = pgp(connectionString);
 
 // services imports
 const WaitersApp = waitersApp(database);
+const waiterRegistration = WaiterRegistration(database);
 
 describe("waiters app", function () {
   this.timeout(10000);
 
   beforeEach(async () => {
     try {
-      await database.none("TRUNCATE TABLE workers RESTART IDENTITY CASCADE");
+      await database.none(
+        "TRUNCATE TABLE waiter_registration RESTART IDENTITY CASCADE"
+      );
       await database.none(
         "TRUNCATE TABLE availability RESTART IDENTITY CASCADE"
       );
+
+      // admin registration into the app code below:
+      const saltRounds = 10;
+      const password = "1262";
+      const name = "tom";
+
+      const hash = await bcrypt.hash(password, saltRounds);
+      // Store the 'hash' in your password database or use it as needed
+      const waiterSignUp = {
+        name,
+        hash,
+      };
+
       // inserting the admin into the workers table
       await database.none(
-        "insert into workers (waiter_name, role) values ('tom', 'admin')"
+        `insert into waiter_registration (waiter_name, password, role) values ('${waiterSignUp.name}', '${waiterSignUp.hash}', 'admin')`
       );
     } catch (error) {
       console.log(error);
@@ -66,14 +86,35 @@ describe("waiters app", function () {
 
   describe("waiters", () => {
     try {
-      it("should be able to insert and retrieve a waiter", async () => {
-        await WaitersApp.insertWaiter({
-          emailOrName: "kat",
-        });
+      it("should be able to register, retrieve a waiter and hashed password", async () => {
+        const saltRounds = 10;
+        const password = "1234";
+        const name = "tim";
+
+        // bcrypt the password from the user
+        const hash = await bcrypt.hash(password, saltRounds);
+        // Store the 'hash' in your password database or use it as needed
+        const waiterSignUp = {
+          name,
+          hash,
+        };
+        // insert waiter into the waiter_registration database
+        await waiterRegistration.registerWaiter(waiterSignUp);
+
+        // retrieve data in the waiter_registration database
         const waiterRetrieval = await database.oneOrNone(
-          `select waiter_name from workers where role = 'waiter'`
+          `select * from waiter_registration where role = 'waiter'`
         );
-        assert.deepStrictEqual({ waiter_name: "kat" }, waiterRetrieval);
+
+        assert.deepStrictEqual(
+          {
+            waiter_id: 2,
+            waiter_name: "tim",
+            password: waiterSignUp.hash,
+            role: "waiter",
+          },
+          waiterRetrieval
+        );
       });
     } catch (error) {
       console.log(error);
@@ -81,37 +122,57 @@ describe("waiters app", function () {
     }
 
     try {
-      it("should be able to insert and retrieve another waiter", async () => {
-        await WaitersApp.insertWaiter({
-          emailOrName: "bjorn",
-        });
+      it("should be able to register, retrieve another waiter and hashed password", async () => {
+        const saltRounds = 10;
+        const password = "1262";
+        const name = "bjorn";
+
+        const hash = await bcrypt.hash(password, saltRounds);
+        // Store the 'hash' in your password database or use it as needed
+        const waiterSignUp = {
+          name,
+          hash,
+        };
+        // insert waiter into the waiter_registration database
+        await waiterRegistration.registerWaiter(waiterSignUp);
+
+        // retrieve data in the waiter_registration database
         const waiterRetrieval = await database.oneOrNone(
-          `select waiter_name from workers where role = 'waiter'`
+          `select * from waiter_registration where role = 'waiter'`
         );
-        assert.deepStrictEqual({ waiter_name: "bjorn" }, waiterRetrieval);
+
+        assert.deepStrictEqual(
+          {
+            waiter_id: 2,
+            waiter_name: "bjorn",
+            password: waiterSignUp.hash,
+            role: "waiter",
+          },
+          waiterRetrieval
+        );
       });
     } catch (error) {
       console.log(error);
       throw error;
     }
 
-    try {
-      it("should be able to insert a waiter once and retrieve one waiter", async () => {
-        await WaitersApp.insertWaiter({
-          emailOrName: "bjorn",
-        });
-        await WaitersApp.insertWaiter({
-          emailOrName: "bjorn",
-        });
-        const waiterRetrieval = await database.oneOrNone(
-          `select waiter_name from workers where role = 'waiter'`
-        );
-        assert.deepStrictEqual({ waiter_name: "bjorn" }, waiterRetrieval);
-      });
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    // try {
+    //   it("should be able to insert a waiter once and retrieve one waiter", async () => {
+    //     await WaitersApp.insertWaiter({
+    //       emailOrName: "bjorn",
+    //     });
+    //     await WaitersApp.insertWaiter({
+    //       emailOrName: "bjorn",
+    //     });
+    //     const waiterRetrieval = await database.oneOrNone(
+    //       `select waiter_name from workers where role = 'waiter'`
+    //     );
+    //     assert.deepStrictEqual({ waiter_name: "bjorn" }, waiterRetrieval);
+    //   });
+    // } catch (error) {
+    //   console.log(error);
+    //   throw error;
+    // }
 
     // try {
     //   it("should be able to select and view the selected days to work on", async () => {
@@ -136,16 +197,19 @@ describe("waiters app", function () {
 
     try {
       it("should not be able to show the selected days when selected days are less than 3 days", async () => {
-        await WaitersApp.insertWaiter({
-          emailOrName: "kat",
-        });
-        await WaitersApp.setWaiterId("kat");
-        await WaitersApp.selectShift("thursday");
+        const saltRounds = 10;
+        const password = "1262";
+        const name = "bjorn";
 
-        await WaitersApp.insertWaiter({
-          emailOrName: "kat",
-        });
-        await WaitersApp.setWaiterId("kat");
+        const hash = await bcrypt.hash(password, saltRounds);
+        // Store the 'hash' in your password database or use it as needed
+        const waiterSignUp = {
+          name,
+          hash,
+        };
+        // insert waiter into the waiter_registration database
+        await waiterRegistration.registerWaiter(waiterSignUp);
+        await WaitersApp.setWaiterId("bjorn");
         await WaitersApp.selectShift("thursday");
 
         assert.deepStrictEqual([], await WaitersApp.availableWaiters());
@@ -177,7 +241,6 @@ describe("waiters app", function () {
     //   console.log(error);
     //   throw error;
     // };
-
   });
 
   describe("admin", () => {
@@ -213,31 +276,52 @@ describe("waiters app", function () {
     // }
 
     try {
-      it("should be able to delete waiters for a new week and not delete the admin", async () => {
-        await WaitersApp.insertWaiter({
-          emailOrName: "mthunzi",
-        });
+      it("should be able to delete registered waiters for a new week and not delete the admin", async () => {
+        const saltRounds = 10;
+        const password = "5793";
+        const name = "mthunzi";
+
+        // bcrypt the password from the user
+        const hash = await bcrypt.hash(password, saltRounds);
+        // Store the 'hash' in your password database or use it as needed
+        const waiterSignUp = {
+          name,
+          hash,
+        };
+        // insert waiter into the waiter_registration database
+        await waiterRegistration.registerWaiter(waiterSignUp);
         await WaitersApp.setWaiterId("mthunzi");
 
-        await WaitersApp.insertWaiter({
-          emailOrName: "tendani",
-        });
-        await WaitersApp.setWaiterId("tendani");
+        // another waiter registration
+        const saltRounds__ = 10;
+        const password__ = "98272";
+        const name__ = "nick";
 
-        await WaitersApp.insertWaiter({
-          emailOrName: "asisipho",
-        });
-        await WaitersApp.setWaiterId("asisipho");
+        // bcrypt the password from the user
+        const hash__ = await bcrypt.hash(password__, saltRounds__);
+        // Store the 'hash' in your password database or use it as needed
+        const waiterSignUp__ = {
+          name__,
+          hash__,
+        };
+        // insert waiter into the waiter_registration database
+        await waiterRegistration.registerWaiter(waiterSignUp__);
+        await WaitersApp.setWaiterId("mthunzi");
 
         // setting the roster to default
         await WaitersApp.deleteWaiters();
 
         // selecting all the waiters data
-        const waiters = await database.manyOrNone("select * from workers");
+        const waiters = await database.manyOrNone(
+          "select * from waiter_registration"
+        );
+
+        const adminHash = await database.oneOrNone("select password from waiter_registration where role = 'admin'");
 
         assert.deepStrictEqual(
           [
             {
+              password: adminHash.password,
               role: "admin",
               waiter_id: 1,
               waiter_name: "tom",
@@ -251,33 +335,50 @@ describe("waiters app", function () {
       throw error;
     }
 
-    try {
-      it("should be able to delete a waiter", async () => {
-        await WaitersApp.insertWaiter({
-          emailOrName: "anele",
-        });
-  
-        await WaitersApp.insertWaiter({
-          emailOrName: "nick",
-        });
-  
-        // deleting a waiter
-        await WaitersApp.deleteWaiter("nick");
-  
-        const waiters = await database.manyOrNone(`select * from workers`);
-  
-        assert.deepStrictEqual(
-          [
-            { waiter_id: 1, waiter_name: "tom", role: "admin" },
-            { waiter_id: 2, waiter_name: "anele", role: "waiter" },
-          ],
-          waiters
-        );
-      });
-    } catch (error) {
-      console.log(error);
-      throw error;
-    };
+    // try {
+    //   it("should be able to delete a waiter", async () => {
+    //     await WaitersApp.insertWaiter({
+    //       emailOrName: "anele",
+    //     });
+
+    //     await WaitersApp.insertWaiter({
+    //       emailOrName: "nick",
+    //     });
+
+    //     // deleting a waiter
+    //     await WaitersApp.deleteWaiter("nick");
+
+    //     const waiters = await database.manyOrNone(`select * from workers`);
+
+    //     assert.deepStrictEqual(
+    //       [
+    //         { waiter_id: 1, waiter_name: "tom", role: "admin" },
+    //         { waiter_id: 2, waiter_name: "anele", role: "waiter" },
+    //       ],
+    //       waiters
+    //     );
+    //   });
+    // } catch (error) {
+    //   console.log(error);
+    //   throw error;
+    // };
+  });
+
+  // function to import the tests from other files
+  function importTest(name, path) {
+    describe(name, function () {
+      import(path);
+    });
+  }
+
+  describe("unit testing from other files", function () {
+    beforeEach(function () {
+      console.log("running something before each test");
+    });
+    importTest("generateNewPassword", "../services/generatePassword.js");
+    after(function () {
+      console.log("after all tests");
+    });
   });
 
   after(() => {

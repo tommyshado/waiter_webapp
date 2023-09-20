@@ -54,10 +54,18 @@ td {
   color: var(--danger-color);
 }
 
+.passwordIcon {
+  margin-right: 40.8rem;
+}
+
 @media (max-width: 600px) {
   th,
   td {
     padding: 4px;
     font-size: 12px;
+  }
+
+  .passwordIcon {
+    margin-right: 9.5em;
   }
 }

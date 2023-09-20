@@ -1,4 +1,4 @@
-<nav class="bg-[#242424]">
+<nav class="bg-[#242424] py-2">
   <div class="flex flex-row">
     <div class="basis-1/4">
       <a href="/">
@@ -29,22 +29,22 @@
 
 <form action="/waiters/{{waiterName}}" method="post">
 
-  <div class="waiters-page">
-    <h2>Welcome to the Roster App</h2>
+  <div class="waiters-page text-lg py-2">
+    <h2 class="py-2">Welcome to the Roster App</h2>
 
     {{#if messages.error}}
-    <div class="messages danger-messages">
+    <div class="messages danger-messages py-2">
       {{messages.error}}
     </div>
     {{/if}}
 
     {{#if messages.success}}
-    <div class="messages success-messages">
+    <div class="messages success-messages py-2">
       {{messages.success}}
     </div>
     {{/if}}
 
-    <div class="table-container">
+    <div class="table-container py-2">
       <table class="table-auto">
         <tr>
           <th>Monday</th>
@@ -78,7 +78,7 @@
       </table>
     </div>
 
-    <div id="submit">
+    <div class="py-6">
         <button class="bg-[#1ed760] hover:bg-[#0e923c]" type="submit">Submit roster</button>
     </div>
   </div>

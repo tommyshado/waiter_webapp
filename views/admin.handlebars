@@ -1,5 +1,5 @@
 <form action="/days" method="get">
-  <nav class="bg-[#242424]">
+  <nav class="bg-[#242424] py-2">
     <div class="flex flex-row">
       <div class="basis-1/4">
         <a href="/">
@@ -27,16 +27,16 @@
       </div>
     </div>
   </nav>
-  <div class="admin-page">
-    <h2>Welcome to the Roster App</h2>
+  <div class="admin-page py-2 ">
+    <h2 class="text-lg py-2">Welcome to the Roster App</h2>
 
     {{#if messages.success}}
-    <div class="messages success-messages">
+    <div class="messages success-messages py-2">
       {{messages.success}}
     </div>
     {{/if}}
 
-    <div class="table-container">
+    <div class="table-container py-2">
       <table class="table-auto">
         <tr>
           <th>Monday</th>
@@ -72,5 +72,7 @@
 </form>
 
 <form action="/reset" method="post">
-    <button class="bg-[#1ed760] hover:bg-[#0e923c]" type="submit" onclick="return resetOnClick()">Reset roster</button>
+  <div class="py-6">
+      <button class="bg-[#1ed760] hover:bg-[#0e923c]" type="submit" onclick="return resetOnClick()">Reset roster</button>
+  </div>
 </form>

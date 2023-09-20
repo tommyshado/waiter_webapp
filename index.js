@@ -21,6 +21,12 @@ import RegisterWaiterRoute from "./routes/registerWaiterRoute.js";
 // regex pattern module import
 import regexPatternTest from "./regexPattern.js";
 
+// generate password service
+import generatePassword from "./routes/generatePasswordRoute.js";
+
+// route for generate password
+import generateNewPassword from "./services/generatePassword.js";
+
 const app = express();
 const pgp = pgPromise();
 
@@ -68,11 +74,13 @@ const db = pgp(config);
 // services instances
 const WaitersApp = waitersApp(db);
 const WaiterRosterRegistration = WaiterRegistration(db);
+const GeneratePassword = generateNewPassword(db);
 
 // routes instances
 const adminWaiterRoutesIns = adminWaitersRoutes(WaitersApp, regexPatternTest);
 const login = loginRoute(WaiterRosterRegistration, WaitersApp, regexPatternTest, bcrypt);
 const rosterRegister = RegisterWaiterRoute(WaiterRosterRegistration, regexPatternTest, bcrypt);
+const passwordRoute = generatePassword(GeneratePassword);
 
 // ROUTES:
 
@@ -83,6 +91,10 @@ app.get("/signUp", rosterRegister.signUp);
 
 // create a post route for the registration of waiters in the roster
 app.post("/registerwaiter", rosterRegister.registerWiater);
+
+// route for generating password
+app.get("/generatePassword", passwordRoute.passwordRoute);
+app.post("updatePassword", passwordRoute.updatePassword);
 
 app.post("/sendLoginDetails", login.sendLogin);
 
