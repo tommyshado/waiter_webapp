@@ -5,8 +5,15 @@ const adminWaitersRoutes = (waitersAppLogic, regexPattern) => {
         const emailOrName = username.toLowerCase();
 
         if (username !== ":username" && regexPattern(emailOrName)) {
-            await waitersAppLogic.insertWaiter({emailOrName});
-            await waitersAppLogic.setWaiterId(emailOrName);
+            const validWaiter = await waitersAppLogic.getRole({emailOrName});
+
+            if (validWaiter) {
+                await waitersAppLogic.setWaiterId(emailOrName);
+            }else {
+                req.flash("error", "Not registered in the roster register.");
+                res.redirect("/");
+            };
+            
         } else {
             req.flash("error", "Invalid waiter or admin name. Please enter name. abcdeABCDE.");
             res.redirect("/");

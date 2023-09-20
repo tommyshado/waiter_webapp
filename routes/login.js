@@ -9,48 +9,65 @@ const loginRoute = (signUpLogic, waitersAppLogic, regexPattern, bcrypt) => {
         if (emailOrName && regexPattern(emailOrName)) {
             const details = {
                 emailOrName,
-                password
+                password,
             };
 
             const hashPassword = await signUpLogic.retrieveHash(details.emailOrName);
-            // Load hash from your password DB.
-            bcrypt.compare(details.password, hashPassword.password, async (error, result) => {
-                // result == true
-                if (error) {
-                    console.error(error);
-                    res.redirect("/");
-                } else if (result) {
-                    // case : hashed password matches the entered password from the user
-                    const adminOrWaiter = await waitersAppLogic.getWaiter(details);
-                    await waitersAppLogic.setWaiterId(details.emailOrName);
 
-                    // when the waiter is found redirect to the waiters page
-                    if (adminOrWaiter === "waiter") {
-                        req.flash("success", "Logged in successfully.");
-                        res.redirect(`/waiters/${emailOrName}`);
-                    } else {
-                        req.flash("success", "Logged in successfully.");
-                        // otherwise, redirect to the admins page
-                        res.redirect("/days");
-                    };
+            if (hashPassword) {
+                // Load hash from your password DB.
+                bcrypt.compare(
+                    details.password,
+                    hashPassword.password,
+                    async (error, result) => {
+                        // result == true
+                        if (error) {
+                            console.error(error);
+                            res.redirect("/");
+                        } else if (result) {
+                            // case : hashed password matches the entered password from the user
+                            const adminOrWaiter = await waitersAppLogic.getRole(details);
+                            await waitersAppLogic.setWaiterId(details.emailOrName);
 
-                } else {
-                    // case: user not registered in the roster
-                    req.flash("error", "Not registered in the roster register.");
-                    res.redirect("/");
-                };
-            });
+                            // when the waiter is found redirect to the waiters page
+                            if (adminOrWaiter === "waiter") {
+                                req.flash("success", "Logged in successfully.");
+                                res.redirect(`/waiters/${emailOrName}`);
+                            } else if (adminOrWaiter === "admin") {
+                                req.flash("success", "Logged in successfully.");
+                                // otherwise, redirect to the admins page
+                                res.redirect("/days");
+                            } else if (adminOrWaiter === null) {
+                                // show a message
+                                req.flash("error", "Not registered in the roster register.");
+                                res.redirect("/");
+                            }
+                        } else {
+                            // case: where username forget password
+                            req.flash("error", "Incorrect password.");
+                            res.redirect("/");
+                        }
+                    }
+                );
 
+                // case: where there is no hashed password which means a user is not registered
+            } else {
+                // show a message
+                req.flash("error", "Not registered in the roster register.");
+                res.redirect("/");
+            }
         } else {
-            req.flash("error", "Invalid waiter name. Please enter name. abcdeABCDE.");
+            req.flash(
+                "error",
+                "Invalid waiter or admin name. Please enter name. abcdeABCDE."
+            );
             res.redirect("/");
-        };
-
+        }
     };
 
     return {
         homeRoute,
-        sendLogin
+        sendLogin,
     };
 };
 
