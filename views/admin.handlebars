@@ -57,10 +57,10 @@
                 {{/if}}
                   <ul>
                   {{#each waiters}}
-                  <form action="/days/{{id}}/{{day}}" method="post">
-                    <li><button id="waiterBtn" type="submit" onclick="return resetOnClick()">{{name}}</button></li>
-                  {{/each}}
+                  <form action="/days/{{this.id}}/{{this.day}}" method="post">
+                    <li><button id="waiterBtn" type="submit" onclick="return resetOnClick()">{{this.name}}</button></li>
                   </form>
+                  {{/each}}
                   </ul>
                 </td>
             {{/each}}
