@@ -9,6 +9,13 @@
   --danger-color: #ff4a1c;
 }
 
+.container {
+  font-family: "Goldman";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+}
+
 li {
   list-style: none;
 }
@@ -55,7 +62,14 @@ td {
 }
 
 .passwordIcon {
-  margin-right: 40.8rem;
+  margin-right: 38.2rem;
+}
+
+.buttons {
+  width: 250px;
+  height: 50px;
+  border-radius: 25px;
+  border: 1px solid var(--text-color);
 }
 
 @media (max-width: 600px) {
@@ -66,6 +80,6 @@ td {
   }
 
   .passwordIcon {
-    margin-right: 9.5em;
+    margin-right: 6.7em;
   }
 }

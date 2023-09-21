@@ -1,6 +1,6 @@
 <nav class="bg-[#242424] py-2">
   <center>
-    <h1 class="text-2xl font-bold">
+    <h1 class="text-4xl font-bold">
       <strong>
         Waiters App | Roster App
       </strong>
@@ -9,7 +9,7 @@
 </nav>
 
 <div class="login-page py-2">
-  <h2 class="text-lg py-2"><strong>Log in the Roster App</strong></h2>
+  <h2 class="text-2xl py-2"><strong>Log in the Roster App</strong></h2>
 
   <form action="/sendLoginDetails" method="post">
     {{#if messages.error}}
@@ -82,14 +82,17 @@
     </div>
 
     <div class="py-6">
-      <button class="bg-[#1ed760] hover:bg-[#0e923c]" type="submit"><strong
+      <button class="bg-[#1ed760] hover:bg-[#0e923c] buttons" type="submit"><strong
         >Login</strong></button>
+    </div>
+
+    <div>
+        <span><a class="text-[#1ed760]" href="/generatePassword">Forgot your password?</a></span><br
+        />
+        <span class="text-[#242424]"><strong>Not registered?</strong></span>
+        <a class="text-[#1ed760]" href="/signUp">Register here</a>
     </div>
 
   </form>
 
-  <span><a class="text-[#1ed760]" href="/generatePassword">Forgot your password?</a></span><br
-  />
-  <span class="text-[#242424]"><strong>Not registered?</strong></span>
-  <a class="text-[#1ed760]" href="/signUp">Register here</a>
 </div>

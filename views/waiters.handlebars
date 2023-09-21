@@ -19,8 +19,10 @@
 
     <div class="basis-1/2">
       <center>
-        <h1 class="text-2xl font-bold">
-          Waiters App | Roster App
+        <h1 class="text-4xl font-bold">
+          <strong>
+            Waiters App | Roster App  
+          </strong>
         </h1>
       </center>
     </div>
@@ -30,7 +32,7 @@
 <form action="/waiters/{{waiterName}}" method="post">
 
   <div class="waiters-page text-lg py-2">
-    <h2 class="py-2">Welcome to the Roster App</h2>
+    <h2 class="text-2xl py-2"><strong>Welcome to the Roster App</strong></h2>
 
     {{#if messages.error}}
     <div class="messages danger-messages py-2">
@@ -44,7 +46,7 @@
     </div>
     {{/if}}
 
-    <div class="table-container py-2">
+    <div class="table-container py-4">
       <table class="table-auto">
         <thead>
           <tr>
@@ -81,7 +83,7 @@
     </div>
 
     <div class="py-6">
-        <button class="bg-[#1ed760] hover:bg-[#0e923c]" type="submit">Submit roster</button>
+        <button class="bg-[#1ed760] hover:bg-[#0e923c] buttons" type="submit">Submit roster</button>
     </div>
   </div>
 </form>
