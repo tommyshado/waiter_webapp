@@ -80,7 +80,7 @@ const GeneratePassword = generateNewPassword(db);
 const adminWaiterRoutesIns = adminWaitersRoutes(WaitersApp, regexPatternTest);
 const login = loginRoute(WaiterRosterRegistration, WaitersApp, regexPatternTest, bcrypt);
 const rosterRegister = RegisterWaiterRoute(WaiterRosterRegistration, regexPatternTest, bcrypt);
-const passwordRoute = generatePassword(GeneratePassword);
+const passwordRoute = generatePassword(GeneratePassword, bcrypt);
 
 // ROUTES:
 
@@ -94,7 +94,7 @@ app.post("/registerwaiter", rosterRegister.registerWiater);
 
 // route for generating password
 app.get("/generatePassword", passwordRoute.passwordRoute);
-app.post("updatePassword", passwordRoute.updatePassword);
+app.post("/updatePassword", passwordRoute.updatePassword);
 
 app.post("/sendLoginDetails", login.sendLogin);
 

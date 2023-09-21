@@ -1,10 +1,23 @@
-
-
 const generateNewPassword = (db) => {
+    const oldPasswordHash = async (username) => {
+        return await db.oneOrNone(
+            `select password from waiter_registration where waiter_name = '${username}'`
+        );
+    };
 
-    // CHECK if the given waiter is in the waiter_registration database THEN...
-    // UPDATE the given waiter current password with the new password.
+    const updateUserPassword = async (details) => {
+        const oldHashedPassword = await oldPasswordHash(details.name);
+        const checkName =
+            await db.oneOrNone(`update waiter_registration set password = '${details.hashedPassword}'
+                                where password = '${oldHashedPassword.password}'
+                                RETURNING waiter_name`);
 
+        if (!checkName) return "not registered";
+    };
+
+    return {
+        updateUserPassword,
+    };
 };
 
 export default generateNewPassword;

@@ -1,33 +1,34 @@
 
 
-const generatePassword = (logic) => {
+const generatePassword = (logic, bcrypt) => {
     const passwordRoute = async (req, res) => {
-        const { name } = req.body;
-        let admin;
-        let waiter;
-        if (name === "tom") {
-            admin = true
-            waiter = false;
-        } else {
-            waiter = name;
-        };
-        res.render("generatePassword"), {
-            adminPage: admin,
-            waiterPage: waiter
-        };
+        res.render("generatePassword");
     };
 
     const updatePassword = async (req, res) => {
-        // CHECK if the username entered by the user is in the waiter_registration database IF TRUE...
-            // GET the username password from the database AND...
-            // COMPARE with password that the user entered using bcrypt 
-                // IF the passwords match
-                    // UPDATE the old password with the new hashed password then...
-                    // show a success message
+        const { name, oldPassword, newPassword } = req.body;
+        // hash the newPassword using bcrypt
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
 
-            // otherwise, show an error message
+        const details = {
+            name,
+            oldPassword,
+            hashedPassword
+        };
 
-        // OTHERWISE, show an error message
+        // insert the new hashedPassword into the database
+        const updatedPassword = await logic.updateUserPassword(details);
+
+        if (updatedPassword === "not registered") {
+            req.flash("error", "Username not registered.");
+            // redirect to the sign up page
+            res.redirect("/signUp");
+        } else {
+            req.flash("success", "New password created.");
+            // redirect to the home page
+            res.redirect("/");
+        };
     };
 
     return {
