@@ -1,6 +1,6 @@
 # Waiters webapp
 
-Hello everyone, welcome to the Waiters webapp. I built this app for waiters to schedule a minimum of three days and maximum of five to work within a week. I also built this app for an admin to be able to clear the schedule for a new week.
+Hello everyone, welcome to the Waiters webapp. I built this app for waiters to schedule a minimum of three days and maximum of five to work within a week. I also built this app for an admin to view the scheduled days by the waiters and also clear the schedule for a new week.
 
 ## Badge
 [![Node.js CI](https://github.com/tommyshado/waiter_webapp/actions/workflows/node.js.yml/badge.svg)](https://github.com/tommyshado/waiter_webapp/actions/workflows/node.js.yml)
