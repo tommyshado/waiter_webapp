@@ -31,12 +31,18 @@ const loginRoute = (signUpLogic, waitersAppLogic, regexPattern, bcrypt) => {
 
                             // when the waiter is found redirect to the waiters page
                             if (adminOrWaiter === "waiter") {
+                                // create a new session for a user
+                                req.session.user = { username: details.emailOrName }
                                 req.flash("success", "Logged in successfully.");
                                 res.redirect(`/waiters/${emailOrName}`);
+
                             } else if (adminOrWaiter === "admin") {
+                                // create a new session for a user
+                                req.session.user = { username: details.emailOrName };
                                 req.flash("success", "Logged in successfully.");
                                 // otherwise, redirect to the admins page
                                 res.redirect("/days");
+
                             } else if (adminOrWaiter === null) {
                                 // show a message
                                 req.flash("error", "Not registered in the roster register.");

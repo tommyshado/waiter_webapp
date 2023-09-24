@@ -17,6 +17,7 @@ import WaiterRegistration from "./services/waiterRegistration.js";
 import adminWaitersRoutes from "./routes/adminWaiterRoutes.js";
 import loginRoute from "./routes/login.js";
 import RegisterWaiterRoute from "./routes/registerWaiterRoute.js";
+import logoutRoute from "./routes/logoutRoute.js";
 
 // regex pattern module import
 import regexPatternTest from "./regexPattern.js";
@@ -32,7 +33,7 @@ const pgp = pgPromise();
 
 // initialise session middleware - flash-express depends on it
 app.use(session({
-    secret : "codeXer",
+    secret: "codeXer",
     resave: false,
     saveUninitialized: true
 }));
@@ -81,6 +82,15 @@ const adminWaiterRoutesIns = adminWaitersRoutes(WaitersApp, regexPatternTest);
 const login = loginRoute(WaiterRosterRegistration, WaitersApp, regexPatternTest, bcrypt);
 const rosterRegister = RegisterWaiterRoute(WaiterRosterRegistration, regexPatternTest, bcrypt);
 const passwordRoute = generatePassword(GeneratePassword, bcrypt);
+const LogoutRoute = logoutRoute();
+
+// Middleware to check if the user is authenticated
+function isAuthenticated(req, res, next) {
+    if (req.session && req.session.user) {
+        return next();
+    };
+    res.redirect('/');
+};
 
 // ROUTES:
 
@@ -98,15 +108,17 @@ app.post("/updatePassword", passwordRoute.updatePassword);
 
 app.post("/sendLoginDetails", login.sendLogin);
 
-app.get("/waiters/:username", adminWaiterRoutesIns.waitersRoute);
+app.get("/waiters/:username", isAuthenticated, adminWaiterRoutesIns.waitersRoute);
 
 app.post("/waiters/:username", adminWaiterRoutesIns.selectWorkDayRoute);
 
-app.get("/days", adminWaiterRoutesIns.daysRoute);
+app.get("/days", isAuthenticated, adminWaiterRoutesIns.daysRoute);
 
 app.post("/days/:waiterId/:day", adminWaiterRoutesIns.waiterRoute);
 
 app.post("/reset", adminWaiterRoutesIns.resetRoute);
+
+app.post("/logout", LogoutRoute.logout);
 
 const PORT = process.env.PORT || 3000;
 
