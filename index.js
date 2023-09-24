@@ -74,7 +74,7 @@ const db = pgp(config);
 // services instances
 const WaitersApp = waitersApp(db);
 const WaiterRosterRegistration = WaiterRegistration(db);
-const GeneratePassword = generateNewPassword(db);
+const GeneratePassword = generateNewPassword(db, bcrypt);
 
 // routes instances
 const adminWaiterRoutesIns = adminWaitersRoutes(WaitersApp, regexPatternTest);
