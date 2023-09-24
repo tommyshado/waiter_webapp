@@ -20,7 +20,7 @@
 
 <form action="/waiters/{{waiterName}}" method="post">
 
-  <div class="waiters-page text-lg py-2">
+  <div class="waiters-page text-lg py-4">
     <h2 class="text-2xl py-2"><strong>Welcome to the Roster App</strong></h2>
 
     {{#if messages.error}}
@@ -35,7 +35,7 @@
     </div>
     {{/if}}
 
-    <div class="table-container py-4">
+    <div class="table-container py-6">
       <table class="table-auto">
         <thead>
           <tr>
@@ -71,7 +71,7 @@
       </table>
     </div>
 
-    <div class="py-6">
+    <div class="py-12">
         <button class="bg-[#1ed760] hover:bg-[#0e923c] buttons" type="submit">Submit roster</button>
     </div>
   </div>
