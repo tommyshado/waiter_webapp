@@ -2,7 +2,7 @@ const generateNewPassword = (db, bcrypt) => {
     const updateUserPassword = async (details) => {
         const oldHashedPassword = await updateUserPasswordHelper(details);
 
-        if (oldHashedPassword === true) {
+        if (oldHashedPassword) {
             await db.oneOrNone(`update waiter_registration set password = '${details.hashedPassword}'
                                 where password = '${oldHashedPassword.password}'`);
             return true;
@@ -20,20 +20,14 @@ const generateNewPassword = (db, bcrypt) => {
         );
         
         if (password.password) {
-            bcrypt.compare(details.oldPassword, password.password, async (error, result) => {
-                if (error) {
-                    console.error(error);
-
-                } else if (result) {
-                    return true;
-                } else {
-                    return false;
-                };
+            bcrypt.compare(details.oldPassword, password.password).then(result => {
+                if (result) return password;
+                else if (!result) return false;
             });
         } else {
             return null;
         };
-    }
+    };
 
     return {
         updateUserPassword,
