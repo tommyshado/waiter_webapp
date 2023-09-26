@@ -45,13 +45,13 @@
                 {{#if className}}
                 <td class="{{className}}">
                 {{/if}}
-                  <ul>
                   {{#each waiters}}
-                  <form action="/days/{{this.id}}/{{this.day}}" method="post">
-                    <li><button type="submit" onclick="return resetOnClick()">{{this.name}}</button></li>
-                  </form>
-                  {{/each}}
+                  <ul>
+                    <form action="/days/{{this.id}}/{{this.day}}" method="post">
+                      <li><button type="submit" onclick="return resetOnClick()">{{this.name}}</button></li>
+                    </form>
                   </ul>
+                  {{/each}}
                 </td>
             {{/each}}
           </tr>
