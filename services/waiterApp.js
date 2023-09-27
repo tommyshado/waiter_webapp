@@ -52,7 +52,7 @@ const waitersApp = (db) => {
 
   const availableWaiters = async () =>
     await db.manyOrNone(
-        `SELECT waiter_registration.waiter_name, shifts.day, waiter_registration.waiter_id 
+       `SELECT waiter_registration.waiter_name, shifts.day, waiter_registration.waiter_id 
         FROM waiter_registration INNER JOIN availability 
         ON waiter_registration.waiter_id = availability.waiter_id 
         INNER JOIN shifts ON availability.waiter_shift = shifts.day`

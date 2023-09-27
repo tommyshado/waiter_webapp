@@ -1,5 +1,3 @@
-
-
 const generatePassword = (logic, bcrypt) => {
     const passwordRoute = async (req, res) => {
         res.render("generatePassword");
@@ -10,35 +8,41 @@ const generatePassword = (logic, bcrypt) => {
         // hash the newPassword using bcrypt
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
-
-        const details = {
+        const password = await logic.getPassword({
             name,
             oldPassword,
-            hashedPassword
-        };
+            hashedPassword,
+        });
 
-        // insert the new hashedPassword into the database
-        const updatedPassword = await logic.updateUserPassword(details);
-
-        if (updatedPassword === null) {
+        if (password) {
+            bcrypt.compare(oldPassword, password.password).then(async (result) => {
+                if (result) {
+                    // insert the new hashedPassword into the database
+                    await logic.updateUserPassword({
+                        password,
+                        hashedPassword,
+                    });
+                    req.flash("success", "New password created.");
+                    // redirect to the home page
+                    res.redirect("/");
+                }
+                else if (!result) {
+                    req.flash("error", "Password incorrect");
+                    // Stay on the generatePassword page
+                    res.redirect("/generatePassword");
+                }
+            });
+        } else {
             req.flash("error", "Username not registered.");
             // redirect to the sign up page
             res.redirect("/signUp");
-        } else if (updatedPassword === true) {
-            req.flash("success", "New password created.");
-            // redirect to the home page
-            res.redirect("/");
-        } else {
-            req.flash("error", "Password incorrect");
-            // Stay on the generatePassword page
-            res.redirect("/generatePassword");
-        };
+        }
     };
 
     return {
         passwordRoute,
-        updatePassword
-    }
+        updatePassword,
+    };
 };
 
 export default generatePassword;
