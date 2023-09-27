@@ -4,7 +4,8 @@ const loginRoute = (signUpLogic, waitersAppLogic, regexPattern, bcrypt) => {
     };
 
     const sendLogin = async (req, res) => {
-        const { emailOrName, password } = req.body;
+        const { password } = req.body;
+        const emailOrName = req.body.emailOrName.toLowerCase();
 
         if (emailOrName && regexPattern(emailOrName)) {
             const details = {

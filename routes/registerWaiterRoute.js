@@ -5,8 +5,9 @@ const RegisterWaiterRoute = (waiterRegistration, regexPattern, bcrypt) => {
     };
 
     const registerWiater = async (req, res) => {
-        const { name, password } = req.body;
-
+        const { password } = req.body;
+        const name = req.body.name.toLowerCase();
+        
         if (regexPattern(name)) {
             if (password.length >= 3) {
                 if (name !== password) {
