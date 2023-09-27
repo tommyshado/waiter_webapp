@@ -312,23 +312,13 @@ describe("waiters app", function () {
         await WaitersApp.deleteWaiters();
 
         // selecting all the waiters data
-        const waiters = await database.manyOrNone(
-          "select * from waiter_registration"
+        const waiters = await database.manyOrNone("select * from availability");
+
+        const adminHash = await database.oneOrNone(
+          "select password from waiter_registration where role = 'admin'"
         );
 
-        const adminHash = await database.oneOrNone("select password from waiter_registration where role = 'admin'");
-
-        assert.deepStrictEqual(
-          [
-            {
-              password: adminHash.password,
-              role: "admin",
-              waiter_id: 1,
-              waiter_name: "tom",
-            },
-          ],
-          waiters
-        );
+        assert.deepStrictEqual([], waiters);
       });
     } catch (error) {
       console.log(error);

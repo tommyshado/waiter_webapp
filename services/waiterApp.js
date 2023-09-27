@@ -79,7 +79,7 @@ const waitersApp = (db) => {
     );
 
   const deleteWaiters = async () =>
-    await db.any("delete from waiter_registration where role = 'waiter'");
+    await db.any("delete from availability");
 
   return {
     // insertWaiter,
