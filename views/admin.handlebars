@@ -18,7 +18,42 @@
 
 <form action="/days" method="get">
   <div class="admin-page py-2 ">
-    <h2 class="text-2xl py-2">Welcome to the Roster App</h2>
+    <div class="flex flex-row">
+      <div class="relative inline-block text-left basis-1/4">
+        <div>
+          <div>
+            <button type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-[#000000] px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-[#5b5b5b]" id="menu-button" aria-expanded="true" aria-haspopup="true">
+              <img src="/images/color-legend.png" alt="color-legend" srcset="">
+              <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-[#000000] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none pl-2" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+            <div class="py-1" role="none">
+              <div class="flex hover:bg-[#5b5b5b]">
+                <div style="height: 2rem;width: 2rem; background-color: #ff4a1c;border-radius:5px"></div>
+                <div name="fully-booked" class="text-[#ffffff] block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Less booked</div>
+              </div>
+              <div class="flex hover:bg-[#5b5b5b]">
+                <div style="height: 2rem;width: 2rem; background-color: #0e923c;border-radius:5px"></div>
+                <div name="fully-booked" class="text-[#ffffff] block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Fully booked</div>
+              </div>
+              <div class="flex hover:bg-[#5b5b5b]">
+                <div style="height: 2rem;width: 2rem; background-color: #f28123;border-radius:5px"></div>
+                <div name="fully-booked" class="text-[#ffffff] block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Fully booked</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="basis-1/2">
+            <h2 class="text-2xl py-2">Welcome to the Roster App</h2>
+      </div>
+    </div>
+
 
     {{#if messages.success}}
     <div class="messages success-messages py-2">
