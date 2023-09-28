@@ -154,46 +154,44 @@ describe("waiters app", function () {
     } catch (error) {
       console.log(error);
       throw error;
+    };
+
+    try {
+      it("should be able to select and view the selected days to work on", async () => {
+        const saltRounds = 10;
+        const password = "123456";
+        const name = "kat";
+
+        const hash = await bcrypt.hash(password, saltRounds);
+        // Store the 'hash' in your password database or use it as needed
+        const waiterSignUp = {
+          name,
+          hash,
+        };
+        // insert waiter into the waiter_registration database
+        await waiterRegistration.registerWaiter(waiterSignUp);
+
+        const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
+        await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[0]}')`);
+        await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[1]}')`);
+        await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[2]}')`);
+
+        const availability = await database.manyOrNone(`select * from availability`);
+
+        assert.deepStrictEqual(
+          [
+            { waiter_id: 2, waiter_shift: 'monday' },
+            { waiter_id: 2, waiter_shift: 'tuesday' },
+            { waiter_id: 2, waiter_shift: 'wednesday' }
+          ],
+          availability
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
-
-    // try {
-    //   it("should be able to insert a waiter once and retrieve one waiter", async () => {
-    //     await WaitersApp.insertWaiter({
-    //       emailOrName: "bjorn",
-    //     });
-    //     await WaitersApp.insertWaiter({
-    //       emailOrName: "bjorn",
-    //     });
-    //     const waiterRetrieval = await database.oneOrNone(
-    //       `select waiter_name from workers where role = 'waiter'`
-    //     );
-    //     assert.deepStrictEqual({ waiter_name: "bjorn" }, waiterRetrieval);
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    //   throw error;
-    // }
-
-    // try {
-    //   it("should be able to select and view the selected days to work on", async () => {
-    //     await WaitersApp.insertWaiter({
-    //       emailOrName: "kat",
-    //     });
-    //     await WaitersApp.setWaiterId("kat");
-    //     await WaitersApp.selectShift(["monday", "tuesday", "thursday"]);
-    //     assert.deepStrictEqual(
-    //       [
-    //         { waiter_name: "kat", day: "monday" },
-    //         { waiter_name: "kat", day: "tuesday" },
-    //         { waiter_name: "kat", day: "thursday" },
-    //       ],
-    //       await WaitersApp.availableWaiters()
-    //     );
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    //   throw error;
-    // }
 
     try {
       it("should not be able to show the selected days when selected days are less than 3 days", async () => {
@@ -219,64 +217,101 @@ describe("waiters app", function () {
       throw error;
     }
 
-    // try {
-    //   it("should be able to update the selected day by removing a day", async () => {
-    //     await WaitersApp.insertWaiter({
-    //       emailOrName: "nicholas",
-    //     });
-    //     await WaitersApp.setWaiterId("nicholas");
-    //     await WaitersApp.selectShift(["thursday", "tuesday", "friday"]);
-
-    //     // update the selected day
-    //     await WaitersApp.updateSelectedDay("thursday");
-    //     assert.deepStrictEqual(
-    //       [
-    //         { waiter_name: "nicholas", day: "tuesday" },
-    //         { waiter_name: "nicholas", day: "friday" },
-    //       ],
-    //       await WaitersApp.availableWaiters()
-    //     );
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    //   throw error;
-    // };
+    try {
+        it("should be able to update the selected day by removing a day", async () => {
+          const saltRounds = 10;
+          const password = "123456";
+          const name = "tendani";
+  
+          const hash = await bcrypt.hash(password, saltRounds);
+          // Store the 'hash' in your password database or use it as needed
+          const waiterSignUp = {
+            name,
+            hash,
+          };
+          // insert waiter into the waiter_registration database
+          await waiterRegistration.registerWaiter(waiterSignUp);
+  
+          const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+  
+          await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[1]}')`);
+          await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[2]}')`);
+          await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[3]}')`);
+  
+          const availability = await database.manyOrNone(`select * from availability`);
+  
+          assert.deepStrictEqual(
+            [
+              { waiter_id: 2, waiter_shift: 'tuesday' },
+              { waiter_id: 2, waiter_shift: 'wednesday' },
+              { waiter_id: 2, waiter_shift: 'thursday' }
+            ],
+            availability
+          );
+  
+          // update a day by deleting and insert another day in the deleted day place
+          await database.none(`delete from availability where waiter_id = '2' and waiter_shift = 'tuesday'`);
+  
+          const availability__ = await database.manyOrNone(`select * from availability`);
+  
+          assert.deepStrictEqual(
+            [
+              { waiter_id: 2, waiter_shift: 'wednesday' },
+              { waiter_id: 2, waiter_shift: 'thursday' }
+            ],
+            availability__
+          );
+        });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    };
   });
 
   describe("admin", () => {
-    // try {
-    //   it("should be able to view the waiters that selected for a day", async () => {
-    //     await WaitersApp.insertWaiter({
-    //       emailOrName: "tendani",
-    //     });
-    //     await WaitersApp.setWaiterId("tendani");
-    //     await WaitersApp.selectShift(["tuesday", "wednesday", "friday"]);
+    try {
+      it("should be able to view the waiters that selected for a day", async () => {
+        const saltRounds = 10;
+        const password = "123456";
+        const name = "asisipho";
 
-    //     await WaitersApp.insertWaiter({
-    //       emailOrName: "asisipho",
-    //     });
-    //     await WaitersApp.setWaiterId("asisipho");
-    //     await WaitersApp.selectShift(["wednesday", "thursday", "saturday"]);
+        const hash = await bcrypt.hash(password, saltRounds);
+        // Store the 'hash' in your password database or use it as needed
+        const waiterSignUp = {
+          name,
+          hash,
+        };
+        // insert waiter into the waiter_registration database
+        await waiterRegistration.registerWaiter(waiterSignUp);
 
-    //     assert.deepStrictEqual(
-    //       [
-    //         { waiter_name: "tendani", day: "tuesday" },
-    //         { waiter_name: "tendani", day: "wednesday" },
-    //         { waiter_name: "tendani", day: "friday" },
-    //         { waiter_name: "asisipho", day: "monday" },
-    //         { waiter_name: "asisipho", day: "thursday" },
-    //         { waiter_name: "asisipho", day: "saturday" },
-    //       ],
-    //       await WaitersApp.availableWaiters()
-    //     );
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    //   throw error;
-    // }
+        const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
+        await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[0]}')`);
+        await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[1]}')`);
+        await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[2]}')`);
+        await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[3]}')`);
+        await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[4]}')`);
+
+        const availability = await database.manyOrNone(`select * from availability`);
+
+        assert.deepStrictEqual(
+          [
+            { waiter_id: 2, waiter_shift: 'monday' },
+            { waiter_id: 2, waiter_shift: 'tuesday' },
+            { waiter_id: 2, waiter_shift: 'wednesday' },
+            { waiter_id: 2, waiter_shift: 'thursday' },
+            { waiter_id: 2, waiter_shift: 'friday' },
+          ],
+          availability
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
 
     try {
-      it("should be able to delete registered waiters for a new week and not delete the admin", async () => {
+      it("should be able to delete available waiters to work for a new week", async () => {
         const saltRounds = 10;
         const password = "5793";
         const name = "mthunzi";
@@ -314,10 +349,6 @@ describe("waiters app", function () {
         // selecting all the waiters data
         const waiters = await database.manyOrNone("select * from availability");
 
-        const adminHash = await database.oneOrNone(
-          "select password from waiter_registration where role = 'admin'"
-        );
-
         assert.deepStrictEqual([], waiters);
       });
     } catch (error) {
@@ -325,33 +356,55 @@ describe("waiters app", function () {
       throw error;
     }
 
-    // try {
-    //   it("should be able to delete a waiter", async () => {
-    //     await WaitersApp.insertWaiter({
-    //       emailOrName: "anele",
-    //     });
+    try {
+      it("should be able to delete a waiter from the availability table", async () => {
+        const saltRounds = 10;
+        const password = "2211";
+        const name = "bjorn";
 
-    //     await WaitersApp.insertWaiter({
-    //       emailOrName: "nick",
-    //     });
+        const hash = await bcrypt.hash(password, saltRounds);
+        // Store the 'hash' in your password database or use it as needed
+        const waiterSignUp = {
+          name,
+          hash,
+        };
+        // insert waiter into the waiter_registration database
+        await waiterRegistration.registerWaiter(waiterSignUp);
 
-    //     // deleting a waiter
-    //     await WaitersApp.deleteWaiter("nick");
+        const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
-    //     const waiters = await database.manyOrNone(`select * from workers`);
+        await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[0]}')`);
+        await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[1]}')`);
+        await database.none(`insert into availability (waiter_id, waiter_shift) values ('2', '${days[2]}')`);
 
-    //     assert.deepStrictEqual(
-    //       [
-    //         { waiter_id: 1, waiter_name: "tom", role: "admin" },
-    //         { waiter_id: 2, waiter_name: "anele", role: "waiter" },
-    //       ],
-    //       waiters
-    //     );
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    //   throw error;
-    // };
+        const availability = await database.manyOrNone(`select * from availability`);
+
+        assert.deepStrictEqual(
+          [
+            { waiter_id: 2, waiter_shift: 'monday' },
+            { waiter_id: 2, waiter_shift: 'tuesday' },
+            { waiter_id: 2, waiter_shift: 'wednesday' }
+          ],
+          availability
+        );
+
+        // deleting a waiter in the availability table
+        await database.manyOrNone(`delete from availability where waiter_id = '2' and waiter_shift = 'wednesday'`);
+
+        const availability__ = await database.manyOrNone("select * from availability");
+
+        assert.deepStrictEqual(
+          [
+            { waiter_id: 2, waiter_shift: 'monday' },
+            { waiter_id: 2, waiter_shift: 'tuesday' },
+          ],
+          availability__
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    };
   });
 
   // function to import the tests from other files
