@@ -407,23 +407,6 @@ describe("waiters app", function () {
     };
   });
 
-  // function to import the tests from other files
-  function importTest(name, path) {
-    describe(name, function () {
-      import(path);
-    });
-  }
-
-  describe("unit testing from other files", function () {
-    beforeEach(function () {
-      console.log("running something before each test");
-    });
-    importTest("generateNewPassword", "../services/generatePassword.js");
-    after(function () {
-      console.log("after all tests");
-    });
-  });
-
   after(() => {
     database.$pool.end;
   });
