@@ -117,11 +117,12 @@ const adminWaitersRoutes = (waitersAppLogic, regexPattern) => {
                     });
                 };
 
-                if (waiter.waiters.length > 3) {
+                const getWaitersLstLen = waiter.waiters.length;
+                if (getWaitersLstLen > 3) {
                     waiter.className = "warning";
-                } else if (waiter.waiters.length === 3) {
+                } else if (getWaitersLstLen === 3) {
                     waiter.className = "success";
-                } else {
+                } else if (getWaitersLstLen > 0 && getWaitersLstLen < 3) {
                     waiter.className = "danger";
                 };
             });
