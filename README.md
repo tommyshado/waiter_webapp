@@ -7,12 +7,11 @@ Hello everyone, welcome to the Waiters web app. I built this app for waiters to 
 <span>password<span>: 123
 
 ## Waiter
-
-# Log in as an existing waiter
+Log in as an existing waiter <br>
 <span>username<span>: mthunzi <br>
 <span>password<span>: 12345
 
-# OR sign up a waiter using a signup page
+OR sign up a waiter using a signup page
 
 ## Badge
 [![Node.js CI](https://github.com/tommyshado/waiter_webapp/actions/workflows/node.js.yml/badge.svg)](https://github.com/tommyshado/waiter_webapp/actions/workflows/node.js.yml)
