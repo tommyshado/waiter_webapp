@@ -41,7 +41,7 @@ app.use(session({
 // initialise the flash middleware
 app.use(flash());
 
-const databaseURL = process.env.DATABASE_URL;
+const databaseURL = process.env.DATABASE_URL || "postgres://pxwanxui:1uOtKZUXM2UceF8Bf60wSq92g6SSyjuJ@snuffleupagus.db.elephantsql.com/pxwanxui";
 
 const config = {
     connectionString: databaseURL

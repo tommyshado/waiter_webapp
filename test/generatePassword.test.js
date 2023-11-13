@@ -5,7 +5,7 @@ import "dotenv/config";
 import bcrypt from "bcrypt";
 
 const pgp = pgPromise();
-const connectionString = process.env.DATABASE_URL_TEST;
+const connectionString = process.env.DATABASE_URL_TEST || "postgres://elyifdyl:DA8caX8UfNVvqNrg5ZDX-MxaPfVnicdb@snuffleupagus.db.elephantsql.com/elyifdyl";
 const database = pgp(connectionString);
 
 const logic = generateNewPassword(database);
