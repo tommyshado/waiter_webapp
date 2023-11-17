@@ -135,7 +135,10 @@ const adminWaitersRoutes = (waitersAppLogic, regexPattern) => {
 
     const waiterRoute = async (req, res) => {
         const { waiterId, day } = req.params;
-        await waitersAppLogic.deleteWaiter(waiterId, day);
+        await waitersAppLogic.deleteWaiter({
+            waiterId,
+            day
+        });
         req.flash("success", `successfully removed waiter.`);
         res.redirect("/days");
     };

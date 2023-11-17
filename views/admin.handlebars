@@ -79,16 +79,16 @@
           <tr class="">
             {{#each waiterNames}}
                 {{#if className}}
-                <td class="{{className}}">
+                  <td class="{{className}}">
+                    {{#each waiters}}
+                      <ul>
+                        <form action="/days/{{this.id}}/{{this.day}}" method="post">
+                          <li><button type="submit" onclick="return resetOnClick()">{{this.name}}</button></li>
+                        </form>
+                      </ul>
+                    {{/each}}
+                  </td>
                 {{/if}}
-                  {{#each waiters}}
-                  <ul>
-                    <form action="/days/{{this.id}}/{{this.day}}" method="post">
-                      <li><button type="submit" onclick="return resetOnClick()">{{this.name}}</button></li>
-                    </form>
-                  </ul>
-                  {{/each}}
-                </td>
             {{/each}}
           </tr>
         </tbody>

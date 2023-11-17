@@ -34,7 +34,7 @@ const waitersApp = (db) => {
         const checkHelper = await selectShiftHelper(waitersId, oneShift);
         if (checkHelper) {
           await db.none(
-            `insert into availability (waiter_id, waiter_shift) values ('${waitersId}', '${oneShift}')` // sort by waiter id
+            `insert into availability (waiter_id, waiter_shift) values ('${waitersId}', '${oneShift}')`
           );
         }
       });
@@ -61,7 +61,7 @@ const waitersApp = (db) => {
   const updateSelectedDay = async (shift) =>
     await db.none(
       `delete from availability where waiter_shift = '${shift}' and waiter_id = '${waitersId}'`
-    ); // shifts.day insert the day I want to update
+    );
 
   const shifts = async () =>
     await db.manyOrNone(
@@ -70,12 +70,9 @@ const waitersApp = (db) => {
 
   const weekDays = async () => await db.any("select day from shifts");
 
-  // grab the waiter id, and day that they selected from the parameters or url
-  // delete waiter records based on the waiter id and the selected day within the availability table
-  // this function takes in two parameters, waiter id and day both comes from the url
-  const deleteWaiter = async (waiterId, selectedDay) =>
+  const deleteWaiter = async (data) =>
     await db.any(
-      `delete from availability where waiter_id = '${waiterId}' and waiter_shift = '${selectedDay}'`
+      `delete from availability where waiter_id = '${data.waiterId}' and waiter_shift = '${data.day}'`
     );
 
   const deleteWaiters = async () =>
