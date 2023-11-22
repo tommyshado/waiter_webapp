@@ -1,7 +1,7 @@
 const waitersApp = (db) => {
 
   const getRole = async (waiterName) => {
-    const name = waiterName.emailOrName;
+    const name = waiterName.name;
     if (name) {
       const waiter = await db.oneOrNone(
         `select role from waiter_registration where waiter_name = '${name}'`

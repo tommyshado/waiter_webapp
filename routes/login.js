@@ -5,15 +5,15 @@ const loginRoute = (signUpLogic, waitersAppLogic, regexPattern, bcrypt) => {
 
     const sendLogin = async (req, res) => {
         const { password } = req.body;
-        const emailOrName = req.body.emailOrName.toLowerCase();
+        const name = req.body.name.toLowerCase();
 
-        if (emailOrName && regexPattern(emailOrName)) {
+        if (name && regexPattern(name)) {
             const details = {
-                emailOrName,
+                name,
                 password,
             };
 
-            const hashPassword = await signUpLogic.retrieveHash(details.emailOrName);
+            const hashPassword = await signUpLogic.retrieveHash(details.name);
 
             if (hashPassword) {
                 // Load hash from your password DB.
@@ -28,18 +28,18 @@ const loginRoute = (signUpLogic, waitersAppLogic, regexPattern, bcrypt) => {
                         } else if (result) {
                             // case : hashed password matches the entered password from the user
                             const adminOrWaiter = await waitersAppLogic.getRole(details);
-                            await waitersAppLogic.setWaiterId(details.emailOrName);
+                            await waitersAppLogic.setWaiterId(details.name);
 
                             // when the waiter is found redirect to the waiters page
                             if (adminOrWaiter === "waiter") {
                                 // create a new session for a user
-                                req.session.user = { username: details.emailOrName }
+                                req.session.user = { username: details.name }
                                 req.flash("success", "Logged in successfully.");
-                                res.redirect(`/waiters/${emailOrName}`);
+                                res.redirect(`/waiters/${username}`);
 
                             } else if (adminOrWaiter === "admin") {
                                 // create a new session for a user
-                                req.session.user = { username: details.emailOrName };
+                                req.session.user = { username: details.name };
                                 req.flash("success", "Logged in successfully.");
                                 // otherwise, redirect to the admins page
                                 res.redirect("/days");

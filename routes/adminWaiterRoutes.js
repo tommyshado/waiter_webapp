@@ -2,13 +2,13 @@ const adminWaitersRoutes = (waitersAppLogic, regexPattern) => {
 
     const waitersRoute = async (req, res) => {
         const { username } = req.params;
-        const emailOrName = username.toLowerCase();
+        const name = username.toLowerCase();
 
-        if (username !== ":username" && regexPattern(emailOrName)) {
-            const validWaiter = await waitersAppLogic.getRole({emailOrName});
+        if (username !== ":username" && regexPattern(name)) {
+            const validWaiter = await waitersAppLogic.getRole({name});
 
             if (validWaiter) {
-                await waitersAppLogic.setWaiterId(emailOrName);
+                await waitersAppLogic.setWaiterId(name);
             }else {
                 req.flash("error", "Not registered in the roster register.");
                 res.redirect("/");
