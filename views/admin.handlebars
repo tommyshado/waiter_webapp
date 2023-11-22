@@ -58,7 +58,6 @@
       </div>
     </div>
 
-
     {{#if messages.success}}
     <div class="messages success-messages py-2">
       {{messages.success}}
@@ -67,35 +66,27 @@
 
     <div class="table-container py-6">
       <table class="table-auto">
-        <thead>
-          <tr>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wednesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
-            <th>Sunday</th>
-          </tr>
-        </thead>
+        <tr>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+          <th>Sunday</th>
+        </tr>
 
-        <tbody>
-          <tr class="">
-            {{#each waiterNames}}
-            {{#if className}}
-            <td class="{{className}}">
-              {{/if}}
+        <tr>
+          {{#each waiterNames}}
+            <td class="{{#if className}}{{className}}{{/if}}">
               {{#each waiters}}
-              <ul>
                 <form action="/days/{{this.id}}/{{this.day}}" method="post">
-                  <li><button type="submit" onclick="return resetOnClick()">{{this.name}}</button></li>
+                  <span><button type="submit" onclick="return resetOnClick()">{{this.name}}</button></span>
                 </form>
-              </ul>
               {{/each}}
             </td>
-            {{/each}}
-          </tr>
-        </tbody>
+          {{/each}}
+        </tr>
       </table>
     </div>
   </div>

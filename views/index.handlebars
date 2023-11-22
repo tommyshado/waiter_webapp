@@ -22,12 +22,11 @@
     {{/if}}
 
     <div class="py-4">
-      <label name="emailOrName" for="email-or-username"><strong
-        >Username</strong></label>
+      <label for="username"><strong>Username</strong></label>
       <div>
         <input
           class="text-[#000000] bg-[#5b5b5b] focus:bg-white rounded-md border-2"
-          name="emailOrName"
+          name="name"
           type="text"
           placeholder="Enter your name"
         />
@@ -40,9 +39,8 @@
         <input
           class="text-[#000000] bg-[#5b5b5b] focus:bg-white rounded-md border-2"
           name="password"
-          type="text"
+          type="password"
           placeholder="Enter your password"
-          :type="show ? 'password' : 'text'"
         />
 
         <div

@@ -37,7 +37,6 @@
 
     <div class="table-container py-6">
       <table class="table-auto">
-        <thead>
           <tr>
             <th>Monday</th>
             <th>Tuesday</th>
@@ -47,27 +46,24 @@
             <th>Saturday</th>
             <th>Sunday</th>
           </tr>
-        </thead>
 
-        <tbody>
-          <tr class="">
-          {{#each shift}}
-            <td>
-              <label for="Monday">
-                <input
-                  type="checkbox"
-                  name="weekDay"
-                  value="{{day}}"
-                  class="w-8 h-8 checked:accent-[#0e923c]"
-                  {{#if isChecked}}
-                  checked
-                  {{/if}}
-                />
-              </label>
-            </td>
-        {{/each}}
+          <tr>
+            {{#each shift}}
+              <td>
+                <label for="Monday">
+                  <input
+                    type="checkbox"
+                    name="weekDay"
+                    value="{{day}}"
+                    class="w-8 h-8 checked:accent-[#0e923c]"
+                    {{#if isChecked}}
+                    checked
+                    {{/if}}
+                  />
+                </label>
+              </td>
+            {{/each}}
           </tr>
-        </tbody>
       </table>
     </div>
 
