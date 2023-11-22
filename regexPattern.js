@@ -1,8 +1,6 @@
 
 const regexPatternTest = name => {
-    const regexPattern = /^[a-zA-Z]+$/;
-    const regexPatternTest = regexPattern.test(name);
-    return regexPatternTest;
+    return (/^[a-zA-Z]+$/).test(name);
 };
 
 export default regexPatternTest;
