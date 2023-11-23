@@ -35,7 +35,7 @@ const loginRoute = (signUpLogic, waitersAppLogic, regexPattern, bcrypt) => {
                                 // create a new session for a user
                                 req.session.user = { username: details.name }
                                 req.flash("success", "Logged in successfully.");
-                                res.redirect(`/waiters/${username}`);
+                                res.redirect(`/waiters/${details.name}`);
 
                             } else if (adminOrWaiter === "admin") {
                                 // create a new session for a user

@@ -40,7 +40,7 @@ const adminWaitersRoutes = (waitersAppLogic, regexPattern) => {
         };
 
         res.render("waiters", {
-            waiterName: emailOrName,
+            waiterName: name,
             shift: await isChecked(),
         });
     };
