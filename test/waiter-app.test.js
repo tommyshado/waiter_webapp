@@ -325,23 +325,19 @@ describe("waiters app", function () {
         };
         // insert waiter into the waiter_registration database
         await waiterRegistration.registerWaiter(waiterSignUp);
-        await WaitersApp.setWaiterId("mthunzi");
 
         // another waiter registration
         const saltRounds__ = 10;
         const password__ = "98272";
-        const name__ = "nick";
 
-        // bcrypt the password from the user
-        const hash__ = await bcrypt.hash(password__, saltRounds__);
         // Store the 'hash' in your password database or use it as needed
         const waiterSignUp__ = {
-          name__,
-          hash__,
+          name: "nick",
+          hash: await bcrypt.hash(password__, saltRounds__),
         };
+
         // insert waiter into the waiter_registration database
         await waiterRegistration.registerWaiter(waiterSignUp__);
-        await WaitersApp.setWaiterId("mthunzi");
 
         // setting the roster to default
         await WaitersApp.deleteWaiters();

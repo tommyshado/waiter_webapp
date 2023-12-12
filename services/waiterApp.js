@@ -4,7 +4,7 @@ const waitersApp = (db) => {
     const name = waiterName.name;
     if (name) {
       const waiter = await db.oneOrNone(
-        `select role from waiter_registration where waiter_name = '${name}'`
+        `select role from waiter_registration where waiter_name = $1`, name
       );
       const role = waiter.role;
 
@@ -34,7 +34,7 @@ const waitersApp = (db) => {
         const checkHelper = await selectShiftHelper(waitersId, oneShift);
         if (checkHelper) {
           await db.none(
-            `insert into availability (waiter_id, waiter_shift) values ('${waitersId}', '${oneShift}')`
+            `insert into availability (waiter_id, waiter_shift) values ($1, $2)`, [waitersId, oneShift]
           );
         }
       });
@@ -45,7 +45,7 @@ const waitersApp = (db) => {
 
   const selectShiftHelper = async (id, shift) => {
     const availability = await db.any(
-      `select * from availability where waiter_id = ${id} and waiter_shift = '${shift}'`
+      `select * from availability where waiter_id = $1 and waiter_shift = $2`, [id, shift]
     );
     return availability.length === 0;
   };
@@ -60,19 +60,19 @@ const waitersApp = (db) => {
 
   const updateSelectedDay = async (shift) =>
     await db.none(
-      `delete from availability where waiter_shift = '${shift}' and waiter_id = '${waitersId}'`
+      `delete from availability where waiter_shift = $1 and waiter_id = $2`, [shift, waitersId]
     );
 
   const shifts = async () =>
     await db.manyOrNone(
-      `select waiter_shift from availability where waiter_id = '${waitersId}'`
+      `select waiter_shift from availability where waiter_id = $1`, waitersId
     );
 
   const weekDays = async () => await db.any("select day from shifts");
 
   const deleteWaiter = async (data) =>
     await db.any(
-      `delete from availability where waiter_id = '${data.waiterId}' and waiter_shift = '${data.day}'`
+      `delete from availability where waiter_id = $1 and waiter_shift = $2`, [data.waiterId, data.day]
     );
 
   const deleteWaiters = async () =>
