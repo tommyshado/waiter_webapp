@@ -1,100 +1,103 @@
 <nav class="bg-[#242424] py-2">
-  <div class="flex flex-row">
-    <div class="basis-1/4">
-      <form action="/logout" method="post">
-        <button type="submit">Logout</button>
-      </form>
-    </div>
+	<div class="flex flex-row">
+		<div class="basis-1/4">
+			<form action="/logout" method="post">
+				<button type="submit">Logout</button>
+			</form>
+		</div>
 
-    <div class="basis-1/2">
-      <center>
-        <h1 class="text-4xl font-bold">
-          Waiters App | Roster App
-        </h1>
-      </center>
-    </div>
-  </div>
+		<div class="basis-1/2">
+			<center>
+				<h1 class="text-4xl font-bold">
+					Waiters App | Roster App
+				</h1>
+			</center>
+		</div>
+	</div>
 </nav>
 
 <form action="/days" method="get">
-  <div class="admin-page py-2 ">
-    <div class="flex flex-row">
-      <div class="relative inline-block text-left basis-1/4">
-        <div>
-          <div>
-            <button type="button"
-              class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-[#000000] px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-[#5b5b5b]"
-              id="menu-button" aria-expanded="true" aria-haspopup="true">
-              <img src="/images/color-legend.png" alt="color-legend" srcset="">
-            </button>
-          </div>
+	<div class="admin-page py-2 ">
+		<div class="flex flex-row">
+			<div class="relative inline-block text-left basis-1/4">
+				<div>
+					<div>
+						<button type="button"
+							class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-[#000000] px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-[#5b5b5b]"
+							id="menu-button" aria-expanded="false" aria-haspopup="true" onclick="toggleMenu()">
+							<img src="/images/color-legend.png" alt="color-legend" srcset="">
+						</button>
+					</div>
 
-          <div
-            class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-[#000000] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none pl-2"
-            role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-            <div class="py-1" role="none">
-              <div class="flex">
-                <div style="height: 2rem;width: 2rem; background-color: #ff4a1c;border-radius:5px"></div>
-                <div name="fully-booked" class="text-[#ffffff] block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                  id="menu-item-0">Less booked</div>
-              </div>
-              <div class="flex">
-                <div style="height: 2rem;width: 2rem; background-color: #0e923c;border-radius:5px"></div>
-                <div name="fully-booked" class="text-[#ffffff] block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                  id="menu-item-0">Fully booked</div>
-              </div>
-              <div class="flex">
-                <div style="height: 2rem;width: 2rem; background-color: #f28123;border-radius:5px"></div>
-                <div name="over-booked" class="text-[#ffffff] block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                  id="menu-item-0">Over booked</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+					<div id="color-menu"
+						class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-[#000000] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none pl-2 hidden"
+						role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+						<div class="py-1" role="none">
+							<div class="flex">
+								<div style="height: 2rem; width: 2rem; background-color: #ff4a1c; border-radius: 5px">
+								</div>
+								<div name="less-booked" class="text-[#ffffff] block px-4 py-2 text-sm" role="menuitem"
+									tabindex="-1" id="menu-item-0">Less booked</div>
+							</div>
+							<div class="flex">
+								<div style="height: 2rem; width: 2rem; background-color: #0e923c; border-radius: 5px">
+								</div>
+								<div name="fully-booked" class="text-[#ffffff] block px-4 py-2 text-sm" role="menuitem"
+									tabindex="-1" id="menu-item-1">Fully booked</div>
+							</div>
+							<div class="flex">
+								<div style="height: 2rem; width: 2rem; background-color: #f28123; border-radius: 5px">
+								</div>
+								<div name="over-booked" class="text-[#ffffff] block px-4 py-2 text-sm" role="menuitem"
+									tabindex="-1" id="menu-item-2">Over booked</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-      <div class="basis-1/2">
-        <h2 class="text-2xl py-2">Welcome to the Roster App</h2>
-      </div>
-    </div>
+			<div class="basis-1/2">
+				<h2 class="text-2xl py-2">Welcome to the Roster App</h2>
+			</div>
+		</div>
 
-    {{#if messages.success}}
-    <div class="messages success-messages py-2">
-      {{messages.success}}
-    </div>
-    {{/if}}
+		{{#if messages.success}}
+		<div class="messages success-messages py-2">
+			{{messages.success}}
+		</div>
+		{{/if}}
 
-    <div class="table-container py-6">
-      <table class="table-auto">
-        <tr>
-          <th>Monday</th>
-          <th>Tuesday</th>
-          <th>Wednesday</th>
-          <th>Thursday</th>
-          <th>Friday</th>
-          <th>Saturday</th>
-          <th>Sunday</th>
-        </tr>
+		<div class="table-container py-6">
+			<table class="table-auto">
+				<tr>
+					<th>Monday</th>
+					<th>Tuesday</th>
+					<th>Wednesday</th>
+					<th>Thursday</th>
+					<th>Friday</th>
+					<th>Saturday</th>
+					<th>Sunday</th>
+				</tr>
 
-        <tr>
-          {{#each waiterNames}}
-            <td class="{{#if className}}{{className}}{{/if}}">
-              {{#each waiters}}
-                <form action="/days/{{this.id}}/{{this.day}}" method="post">
-                  <span><button type="submit" onclick="return resetOnClick()">{{this.name}}</button></span>
-                </form>
-              {{/each}}
-            </td>
-          {{/each}}
-        </tr>
-      </table>
-    </div>
-  </div>
+				<tr>
+					{{#each waitersData}}
+					<td class="{{#if className}}{{className}}{{/if}}">
+						{{#each waiters}}
+						<li>
+							<button type="submit" onclick="return resetOnClick()">{{name}}</button>
+						</li>
+						{{/each}}
+					</td>
+					{{/each}}
+				</tr>
+			</table>
+		</div>
+	</div>
 </form>
 
 <form action="/reset" method="post">
-  <div class="py-12">
-    <button class="text-[#242424] hover:text-[#000000] bg-[#ffffff] hover:bg-[#5b5b5b] buttons" type="submit"
-      onclick="return resetOnClick()">Reset roster</button>
-  </div>
+	<div class="py-12">
+		<button class="text-[#242424] hover:text-[#000000] bg-[#ffffff] hover:bg-[#5b5b5b] buttons" type="submit"
+			onclick="return resetOnClick()">Reset roster</button>
+	</div>
 </form>

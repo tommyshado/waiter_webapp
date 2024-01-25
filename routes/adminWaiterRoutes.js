@@ -129,7 +129,7 @@ const adminWaitersRoutes = (waitersAppLogic, WaiterRosterRegistration, regexPatt
         });
 
         res.render("admin", {
-            waiterNames: availableWaiters,
+            waitersData: availableWaiters,
         });
     };
 
