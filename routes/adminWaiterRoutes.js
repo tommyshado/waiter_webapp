@@ -1,10 +1,10 @@
-const adminWaitersRoutes = (waitersAppLogic, regexPattern) => {
+const adminWaitersRoutes = (waitersAppLogic, WaiterRosterRegistration, regexPattern) => {
 
     const waitersRoute = async (req, res) => {
-        const { username } = req.params;
-        const name = username.toLowerCase();
+        const name = req.params.username.toLowerCase();
+        const waiter = await WaiterRosterRegistration.getWaiter(name);
 
-        if (username !== ":username" && regexPattern(name)) {
+        if (waiter && regexPattern(name)) {
             const validWaiter = await waitersAppLogic.getRole({name});
 
             if (validWaiter) {

@@ -15,10 +15,13 @@ const WaiterRegistration = db => {
     // retrieve a waiter name and hashed password from the waiters table
     const retrieveHash = async (name) => await db.oneOrNone(`select password from waiter_registration where waiter_name = $1`, name);
 
+    const getWaiter = async (name) => await db.oneOrNone(`select * from waiter_registration where waiter_name = $1`, name);
+
     return {
         registerWaiter,
         retrieveHash,
-    }
+        getWaiter
+    };
 
 };
 

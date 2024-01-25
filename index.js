@@ -41,7 +41,7 @@ app.use(session({
 // initialise the flash middleware
 app.use(flash());
 
-const databaseURL = process.env.DATABASE_URL || "postgres://pxwanxui:1uOtKZUXM2UceF8Bf60wSq92g6SSyjuJ@snuffleupagus.db.elephantsql.com/pxwanxui";
+const databaseURL = process.env.DATABASE_URL;
 
 const config = {
     connectionString: databaseURL
@@ -78,7 +78,7 @@ const WaiterRosterRegistration = WaiterRegistration(db);
 const GeneratePassword = generateNewPassword(db, bcrypt);
 
 // routes instances
-const adminWaiterRoutesIns = adminWaitersRoutes(WaitersApp, regexPatternTest);
+const adminWaiterRoutesIns = adminWaitersRoutes(WaitersApp, WaiterRosterRegistration, regexPatternTest);
 const login = loginRoute(WaiterRosterRegistration, WaitersApp, regexPatternTest, bcrypt);
 const rosterRegister = RegisterWaiterRoute(WaiterRosterRegistration, regexPatternTest, bcrypt);
 const passwordRoute = generatePassword(GeneratePassword, bcrypt);
